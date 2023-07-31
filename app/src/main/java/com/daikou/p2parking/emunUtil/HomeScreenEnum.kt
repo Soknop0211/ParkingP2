@@ -1,0 +1,5 @@
+package com.daikou.p2parking.emunUtil
+
+enum class HomeScreenEnum {
+    TakePhoto , ScanQR
+}

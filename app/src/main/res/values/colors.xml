@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorTick">#0EB345</color>
+    <color name="colorPrimary">#2083CE</color>
+    <color name="colorSecondaryPrimary">#2083CE</color>
+    <color name="colorPrimaryDark">#2083CE</color>
+    <color name="colorAccent">#99AFB8</color>
+    <color name="colorAccentLight">#159EDB</color>
+
+    <color name="web_kess_light_blue">#337ab7</color>
+
+    <color name="colorGPASPrimaryDark">#E5ECEC</color>
+    <color name="colorGPASAccent">#6B7474</color>
+
+    <color name="colorPrimaryCorporate">#0d47a1</color>
+    <!--        <color name="colorPrimaryCorporate">#4d4890</color>-->
+    <color name="dark_gray_2">#E4555555</color>
+
+    <color name="test">#00381D1D</color>
+    <color name="white">#FFFFFF</color>
+    <color name="light_gray">#bfbfbf</color>
+    <color name="brand">#3d95ce</color>
+    <color name="blue_gray">#5a636c</color>
+    <color name="dark_gray">#252525</color>
+    <color name="medium_ui">#ededed</color>
+    <color name="transparent">#00000000</color>
+    <color name="light_ui">#f7f7f7</color>
+    <color name="dark_ui">#d9d9d9</color>
+    <color name="black">#FF000000</color>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.car_photo_taking.CheckInActivity">
+
+    <include
+        android:id="@+id/appBarLayout"
+        layout="@layout/app_bar_layout"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:layout_height="400dp"
+        android:padding="15dp"
+        android:id="@+id/containerTakePhoto"
+        android:background="@drawable/round_outline_border_drawable">
+        <ImageView
+            android:id="@+id/imageCarLogo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/car"
+            android:alpha="0.1"/>
+        <ImageView
+            android:id="@+id/image_camera"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/camera"
+            android:layout_gravity="center"
+            android:alpha="0.5"/>
+        <ImageView
+            android:id="@+id/uploadedImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:text="Submit"
+        style="@style/ButtonStyle"
+        app:strokeColor="@color/colorSecondaryPrimary"
+        android:enabled="false"/>
+
+
+</LinearLayout>
