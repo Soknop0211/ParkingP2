@@ -1,27 +1,24 @@
 package com.daikou.p2parking.ui.scan_check_out
 
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
-import com.budiyev.android.codescanner.AutoFocusMode
-import com.budiyev.android.codescanner.CodeScanner
-import com.budiyev.android.codescanner.ScanMode
+import androidx.appcompat.app.AppCompatActivity
 import com.daikou.p2parking.R
 import com.daikou.p2parking.databinding.ActivityScanBinding
 import com.daikou.p2parking.helper.PermissionRequest
+import com.daikou.p2parking.utility.RedirectClass
+import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class ScanActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanBinding
-    private lateinit var codeScanner: CodeScanner
+    private lateinit var scannerView: ZXingScannerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initView()
-        initScanner()
     }
 
     private fun initView() {
@@ -32,24 +29,33 @@ class ScanActivity : AppCompatActivity() {
     }
 
     private fun initScanner(){
-        val scannerView = binding.codeScannerView
-        codeScanner = CodeScanner(this, scannerView)
-
-        PermissionRequest().CameraPermisstion(this){hasPermission ->
+         scannerView = binding.zxingScanner
+        scannerView.setAutoFocus(true)
+        PermissionRequest().cameraPermission(this){hasPermission ->
             if (hasPermission){
-                startCameraScan()
+                scannerView.setResultHandler(resultHandler)
+                scannerView.startCamera()
             }
         }
     }
 
     private fun startCameraScan(){
-        codeScanner.setDecodeCallback { result ->
-            if (result.text.isNotEmpty()){
-//                Toast.makeText(this, "error scanning", Toast.LENGTH_SHORT).show()
-                finish()
-            }else{
+//        codeScanner.setDecodeCallback { result ->
+//            if (result.text.isNotEmpty()){
+//                val intent = Intent(this@ScanActivity, CheckoutDetailActivity::class.java)
+//                intent.putExtra(CheckoutDetailActivity.TICKET_DATA_KEY, result.text)
+//                startActivity(intent)
+//                finish()
+//            }else{
+//
+//            }
+//        }
+    }
 
-            }
+    private val resultHandler : ZXingScannerView.ResultHandler = ZXingScannerView.ResultHandler {
+        if (it.text.isNotEmpty()){
+            RedirectClass.gotoCheckoutActivity(this, it.text)
+            finish()
         }
     }
 
@@ -63,12 +69,13 @@ class ScanActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        codeScanner.startPreview()
+        initScanner()
     }
 
     override fun onPause() {
-        codeScanner.releaseResources()
         super.onPause()
+        scannerView.stopCamera() // Stop camera on pause
+
     }
 
     override fun onRequestPermissionsResult(
@@ -80,7 +87,9 @@ class ScanActivity : AppCompatActivity() {
         if (requestCode == PermissionRequest.CAMERA_CODE){
             if (grantResults.isNotEmpty()){
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    startCameraScan()
+                    scannerView.startCamera()
+                }else{
+                    finish()  // finish activity when camera is not allowed
                 }
             }
         }

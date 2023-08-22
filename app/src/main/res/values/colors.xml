@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--    <color name="colorTick">#0EB345</color>-->
+    <!--    <color name="colorPrimary">#2083CE</color>-->
+    <!--    <color name="colorSecondaryPrimary">#2083CE</color>-->
+    <!--    <color name="colorPrimaryDark">#2083CE</color>-->
+    <!--    <color name="colorAccent">#99AFB8</color>-->
+    <!--    <color name="colorAccentLight">#159EDB</color>-->
+
     <color name="colorTick">#0EB345</color>
-    <color name="colorPrimary">#2083CE</color>
-    <color name="colorSecondaryPrimary">#2083CE</color>
-    <color name="colorPrimaryDark">#2083CE</color>
+    <color name="colorPrimary">#EC681D</color>
+    <color name="colorSecondaryPrimary">#EC681D</color>
+    <color name="colorPrimaryDark">#EF6314</color>
     <color name="colorAccent">#99AFB8</color>
-    <color name="colorAccentLight">#159EDB</color>
+    <color name="colorAccentLight">#F17027</color>
 
     <color name="web_kess_light_blue">#337ab7</color>
 
@@ -27,4 +34,8 @@
     <color name="light_ui">#f7f7f7</color>
     <color name="dark_ui">#d9d9d9</color>
     <color name="black">#FF000000</color>
+
+
+    <color name="red">#C20000</color>
+    <color name="red_300">#FF3C3C</color>
 </resources>

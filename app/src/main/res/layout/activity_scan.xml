@@ -11,17 +11,14 @@
         android:id="@+id/appBarLayout"
         layout="@layout/app_bar_layout"/>
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.budiyev.android.codescanner.CodeScannerView
-            android:id="@+id/code_scanner_view"
+        <me.dm7.barcodescanner.zxing.ZXingScannerView
+            android:id="@+id/zxing_scanner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:frameCornersCapRounded="true"
-            app:autoFocusButtonVisible="false"
-            app:flashButtonVisible="true" />
-    </RelativeLayout>
+            android:layout_height="match_parent"/>
+    </FrameLayout>
 
 
 

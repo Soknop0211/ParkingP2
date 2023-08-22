@@ -7,6 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -15,6 +16,7 @@
             android:theme="@style/ToolbarTheme"
             android:fitsSystemWindows="true"
             app:layout_collapseMode="pin" />
+
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -22,6 +24,7 @@
             android:text="N/A"
             android:layout_centerInParent="true"
             android:textColor="@color/white"/>
+
     </RelativeLayout>
 
 </com.google.android.material.appbar.AppBarLayout>

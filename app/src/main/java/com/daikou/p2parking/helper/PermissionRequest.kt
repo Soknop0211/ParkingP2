@@ -10,7 +10,7 @@ open class PermissionRequest {
     companion object{
         const val CAMERA_CODE = 1111
     }
-    open fun CameraPermisstion(activity: Activity, onPermissionGranted : (isGranted : Boolean) -> Unit){
+    open fun cameraPermission(activity: Activity, onPermissionGranted : (isGranted : Boolean) -> Unit){
         if (ActivityCompat.checkSelfPermission(
                 activity,
                 Manifest.permission.CAMERA
@@ -18,7 +18,7 @@ open class PermissionRequest {
         ) {
             ActivityCompat.requestPermissions(
                 activity,
-                arrayOf<String>(Manifest.permission.CAMERA),
+                arrayOf(Manifest.permission.CAMERA),
                 CAMERA_CODE
             )
         }else {

@@ -14,14 +14,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_margin="20dp"
-        android:layout_height="400dp"
+        android:layout_height="wrap_content"
         android:padding="15dp"
         android:id="@+id/containerTakePhoto"
         android:background="@drawable/round_outline_border_drawable">
         <ImageView
             android:id="@+id/imageCarLogo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="370dp"
             android:src="@drawable/car"
             android:alpha="0.1"/>
         <ImageView
@@ -34,16 +34,17 @@
         <ImageView
             android:id="@+id/uploadedImage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="370dp"/>
     </FrameLayout>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/action_submit_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:text="Submit"
         style="@style/ButtonStyle"
-        app:strokeColor="@color/colorSecondaryPrimary"
+        app:strokeColor="@color/light_gray"
         android:enabled="false"/>
 
 
