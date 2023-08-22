@@ -7,12 +7,13 @@ import android.os.Handler
 import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.daikou.p2parking.helper.AuthHelper
 import com.daikou.p2parking.helper.SunmiPrintHelper
+import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
-open class BaseActivity : AppCompatActivity() {
-
-    private val activityLauncher : BetterActivityResult<Intent, ActivityResult> = BetterActivityResult.registerActivityForResult(this)
+open class BaseActivity : BaseCoreActivity() {
 
     private lateinit var handler : Handler
 

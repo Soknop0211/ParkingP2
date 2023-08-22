@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">P2 Parking</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="check_in">Check In</string>
     <string name="check_out">Check Out</string>
     <string name="type">Type:</string>
@@ -20,4 +18,15 @@
     <string name="log_in">Login</string>
     <string name="phone_number">Phone Number</string>
     <string name="enter_your_phone_number_and_password_to_make_sure_it_s_you">Enter your phone number and password to make sure it\'s you</string>
+
+    <string name="oops">Oops…!</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="connection_time_out">Connection time out!</string>
+    <string name="no_connection_hint">No internet found. Check your connection or try again.</string>
+    <string name="untrusted_certificate">Untrusted Certificate</string>
+    <string name="connection_refused">Connection refused</string>
+    <string name="ssl_handshake_aborted">The Server has closed the connection</string>
+    <string name="please_enter_a_valid_mobile_number">Please enter a valid phone number</string>
+    <string name="please_enter_password">Please enter password</string>
+
 </resources>

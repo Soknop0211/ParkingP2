@@ -1,6 +1,7 @@
 package com.daikou.p2parking.helper
 
 import android.content.Context
+import com.daikou.p2parking.data.di.network.CustomHttpLogging
 import com.daikou.p2parking.model.Constants
 import com.daikou.p2parking.model.User
 import com.google.gson.Gson
@@ -38,6 +39,10 @@ object AuthHelper{
     fun clearSession(context: Context){
         HelperUtil.setStringSharePreference(context, Constants.Auth.USER_KEY, "")
         HelperUtil.setStringSharePreference(context, Constants.Auth.TOKEN_KEY, "")
+    }
+
+    fun KessLogDataGson(): CustomHttpLogging {
+        return KessLogDataGson()
     }
 
 }

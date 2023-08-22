@@ -1,6 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+
+    //new configure code
+    id 'kotlin-kapt'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
@@ -63,4 +67,42 @@ dependencies {
 
     // json easy generate
     implementation 'com.google.code.gson:gson:2.10.1'
+
+    def dagger_version = /*2.27*/ 2.34
+    implementation "com.google.dagger:dagger:2.44.2"
+    kapt "com.google.dagger:dagger-compiler:2.44.2"
+    implementation "com.google.dagger:dagger-android-support:2.44.2"
+    kapt "com.google.dagger:dagger-android-processor:2.44.2"
+    implementation 'javax.inject:javax.inject:1'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+    implementation 'com.jakewharton.timber:timber:5.0.1'
+
+    //coil
+    implementation("io.coil-kt:coil:1.1.1")
+
+    /*sweetAlert*/
+    implementation 'com.github.f0ris.sweetalert:library:1.6.2'
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
+
+    // Coroutine Lifecycle Scopes
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
+    implementation "androidx.activity:activity-ktx:1.2.2"
+
+    /*RxJava lib*/
+    implementation "io.reactivex.rxjava2:rxjava:2.2.9"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+}
+
+kapt {
+    generateStubs = true
 }

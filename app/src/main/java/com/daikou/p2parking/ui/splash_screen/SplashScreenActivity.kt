@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.daikou.p2parking.base.BaseActivity
+import com.daikou.p2parking.base.SimpleBaseActivity
 import com.daikou.p2parking.databinding.ActivitySplashScreenBinding
+import com.daikou.p2parking.helper.AuthHelper
 import com.daikou.p2parking.utility.RedirectClass
 
 @SuppressLint("CustomSplashScreen")
-class SplashScreenActivity : BaseActivity() {
+class SplashScreenActivity : SimpleBaseActivity() {
 
     private lateinit var binding : ActivitySplashScreenBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +23,7 @@ class SplashScreenActivity : BaseActivity() {
 
     private fun initAction(){
         Handler(Looper.getMainLooper()).postDelayed({
-            if (isLogin(this)){
+            if (AuthHelper.getAccessToken(this) != ""){
                 RedirectClass.gotoMainActivity(this)
             }else{
                 RedirectClass.gotoLoginActivity(this)
