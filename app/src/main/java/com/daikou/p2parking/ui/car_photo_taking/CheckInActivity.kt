@@ -96,7 +96,6 @@ class CheckInActivity : BaseActivity() {
         ticketModel.imgBase64 = imageString
         ticketModel.ticketNo = "T1124N0001"
         val date = Date()
-        ticketModel.timeIn = HelperUtil.formatDate(date)
         return ticketModel
     }
 

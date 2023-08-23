@@ -12,10 +12,6 @@ import android.util.Base64
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.daikou.p2parking.helper.HelperUtil.getStringSharePreference
-import com.daikou.p2parking.helper.HelperUtil.setStringSharePreference
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
@@ -74,8 +70,8 @@ object HelperUtil {
         return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
     }
 
-    fun convertStringToBitmap(imageString: String) : Bitmap{
-        val imageByte = Base64.decode(imageString, Base64.DEFAULT)
+    fun convertStringToBitmap(base64String: String) : Bitmap {
+        val imageByte = Base64.decode(base64String, Base64.DEFAULT)
         return BitmapFactory.decodeByteArray(imageByte, 0, imageByte.size)
     }
 

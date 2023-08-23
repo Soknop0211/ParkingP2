@@ -5,8 +5,8 @@ import android.text.TextUtils
 import android.util.Patterns
 import android.view.View
 import androidx.activity.viewModels
+import com.daikou.p2parking.BuildConfig
 import com.daikou.p2parking.R
-import com.daikou.p2parking.base.BaseActivity
 import com.daikou.p2parking.base.Config
 import com.daikou.p2parking.base.SimpleBaseActivity
 import com.daikou.p2parking.databinding.ActivityLoginBinding
@@ -39,7 +39,10 @@ class LoginActivity : SimpleBaseActivity() {
     }
 
     private fun initView() {
-        binding.toolbar.title.text = resources.getString(R.string.log_in)
+        binding.toolbar.title.text = resources.getString(R.string.log_in).uppercase()
+
+        binding.versionTv.text = String.format("%s %s", resources.getString(R.string.version), BuildConfig.VERSION_NAME)
+
     }
 
     private fun phoneNumberValidate(phone: String): Boolean {

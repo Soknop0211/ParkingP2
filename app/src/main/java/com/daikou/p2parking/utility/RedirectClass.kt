@@ -9,6 +9,7 @@ import com.daikou.p2parking.helper.AuthHelper.clearSession
 import com.daikou.p2parking.ui.LotTypeActivity
 import com.daikou.p2parking.ui.MainActivity
 import com.daikou.p2parking.ui.checkout.CheckoutDetailActivity
+import com.daikou.p2parking.ui.checkout.DoPaymentActivity
 import com.daikou.p2parking.ui.login.LoginActivity
 
 object RedirectClass : BaseActivity() {
@@ -40,6 +41,14 @@ object RedirectClass : BaseActivity() {
         ) {
         val intent = Intent(activity, LotTypeActivity::class.java)
         intent.putExtra(LotTypeActivity.LotTypeResponse, jsonData)
+        gotoActivityForResult(activity, intent, activityResult)
+    }
+
+    fun gotoDoPaymentActivity(
+        activity: Activity,
+        activityResult: BetterActivityResult.OnActivityResult<ActivityResult>,
+    ) {
+        val intent = Intent(activity, DoPaymentActivity::class.java)
         gotoActivityForResult(activity, intent, activityResult)
     }
 }

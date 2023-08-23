@@ -28,7 +28,7 @@ class LotTypeActivity : BaseActivity() {
         binding = ActivityLotTypeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        title = resources.getString(R.string.lot_type)
+        title = resources.getString(R.string.lot_type).uppercase()
 
         // Init View
         binding.toolbar.title.text = resources.getString(R.string.log_in)

@@ -267,4 +267,31 @@ object MessageUtils {
         }
     }
 
+    fun showConfirm(
+        context: Context,
+        title: String?,
+        text: String?,
+        onSweetClickListener: OnSweetClickListener?,
+    ) {
+        var text = text
+        try {
+            text = text?.replace("\r\n".toRegex(), "<br />") ?: ""
+            val alertDialog: SweetAlertDialog =
+                EazySweetAlert(context, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText(title)
+                    .setContentText(text)
+                    .setCancelText(context.getString(R.string.no))
+                    .setConfirmText(
+                        context.getString(R.string.yes_f)
+                    )
+                    .setCancelButtonTextColor(R.color.light_gray)
+                    .showCancelButton(true)
+                    .setConfirmClickListener(onSweetClickListener)
+            alertDialog.setCanceledOnTouchOutside(false)
+            alertDialog.show()
+        } catch (ex: java.lang.RuntimeException) {
+            ex.printStackTrace()
+        }
+    }
+
 }

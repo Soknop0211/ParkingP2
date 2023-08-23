@@ -12,7 +12,6 @@
         layout="@layout/app_bar_layout"/>
 
     <ScrollView
-        android:layout_marginBottom="50dp"
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -255,7 +254,7 @@
                             android:layout_gravity="center"
                             android:text="@string/online_pay"
                             android:paddingHorizontal="10dp"
-                            android:textColor="@color/light_gray"/>
+                            android:textColor="@color/dark_gray"/>
 
                     </LinearLayout>
 
@@ -264,25 +263,25 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:paddingHorizontal="15dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/action_submit_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    style="@style/ButtonStyle"
+                    android:text="@string/submit"
+                    app:strokeColor="@color/colorSecondaryPrimary"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:paddingHorizontal="15dp">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/action_submit_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            style="@style/ButtonStyle"
-            android:text="@string/submit_print"
-            app:strokeColor="@color/colorSecondaryPrimary"
-            android:layout_weight="1"/>
-
-    </LinearLayout>
 
 </LinearLayout>

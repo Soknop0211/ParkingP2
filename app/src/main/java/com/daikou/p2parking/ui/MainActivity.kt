@@ -108,11 +108,25 @@ class MainActivity : BaseActivity() {
                 MessageUtils.showError(this, null, it.message)
             }
         }
+
+        binding.btnLogout.setOnClickListener { it ->
+            it.isEnabled = false
+            it.postDelayed({ it.isEnabled = true }, 500)
+
+            MessageUtils.showConfirm(
+                self(),
+                "",
+                getString(R.string.confirm_to_sign_out)
+            ) {
+                it.dismiss()
+                RedirectClass.gotoLoginActivity(this)
+            }
+        }
     }
 
     private fun setupHomeItem() {
         val itemList  = ArrayList<HomeItemModel>()
-        itemList.add(HomeItemModel(R.drawable.car, resources.getString(R.string.check_in), HomeScreenEnum.TakePhoto))
+        itemList.add(HomeItemModel(R.drawable.take_photo, resources.getString(R.string.check_in), HomeScreenEnum.TakePhoto))
         itemList.add(HomeItemModel(R.drawable.qr_code_symbol,resources.getString(R.string.check_out), HomeScreenEnum.ScanQR))
         homeItemAdapter = HomeItemAdapter()
         homeItemAdapter.setRow(itemList)
@@ -143,12 +157,15 @@ class MainActivity : BaseActivity() {
             if (data != null) {
                 val imageUri = data.data
 
+                if (imageUri != null) {
+                    imgBase64 = imageUri.toString()
+                }
+
                 var bitmap = imageUri?.let { HelperUtil.convertBitmap(this, it) }
                 bitmap = bitmap?.let { HelperUtil.getResizedBitmap(it, 700) }
 
                 if (bitmap != null && mLotTypeModel != null) {
                     val pathImage: String? = HelperUtil.convert(bitmap)
-                    imgBase64 = pathImage
 
                     val requestBody = HashMap<String, Any>()
                     requestBody["lot_type_id"] = mLotTypeModel?.id ?: ""
