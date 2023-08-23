@@ -126,7 +126,7 @@ class MainActivity : BaseActivity() {
 
     private fun setupHomeItem() {
         val itemList  = ArrayList<HomeItemModel>()
-        itemList.add(HomeItemModel(R.drawable.take_photo, resources.getString(R.string.check_in), HomeScreenEnum.TakePhoto))
+        itemList.add(HomeItemModel(R.drawable.camera, resources.getString(R.string.check_in), HomeScreenEnum.TakePhoto))
         itemList.add(HomeItemModel(R.drawable.qr_code_symbol,resources.getString(R.string.check_out), HomeScreenEnum.ScanQR))
         homeItemAdapter = HomeItemAdapter()
         homeItemAdapter.setRow(itemList)

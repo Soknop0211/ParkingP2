@@ -33,4 +33,9 @@ class Repository
         val respond = apiService.submitChecking(bodyMap)
         emit(respond)
     }
+
+    fun submitCheckOut(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<JsonElement>> = flow {
+        val respond = apiService.submitCheckOut(bodyMap)
+        emit(respond)
+    }
 }

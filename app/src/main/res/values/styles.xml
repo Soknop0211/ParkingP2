@@ -31,14 +31,10 @@
         <item name="android:padding">10dp</item>
     </style>
 
-    <style name="AlertShape" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="android:windowBackground">@drawable/card_view_card</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowFrame">@null</item>
-    </style>
-
-    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
-        <item name="windowNoTitle">true</item>
+    <style name="AlertShape" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
 </resources>

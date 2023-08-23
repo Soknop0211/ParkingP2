@@ -83,4 +83,40 @@ class LotTypeViewModel @Inject constructor(
 
     }
 
+    /**** Check Out *****/
+    private var _submitCheckOutMutableLiveData: MutableLiveData<ApiResWraper<JsonElement>> =
+        MutableLiveData<ApiResWraper<JsonElement>>()
+
+    val submitCheckOutMutableLiveData get() = _submitCheckOutMutableLiveData
+
+    fun submitCheckOut(requestBody: HashMap<String, Any>) {
+        val requestFlow: Flow<ApiResWraper<JsonElement>> =
+            repository.submitCheckOut(requestBody)
+        submit(requestFlow, object : IApiResWrapper<ApiResWraper<JsonElement>> {
+            override fun onLoading(hasLoading: Boolean) {
+                _loadingLoginLiveData.value = hasLoading
+            }
+
+            override fun onData(respondData: ApiResWraper<JsonElement>) {
+                if (respondData.success) {
+                    _submitCheckOutMutableLiveData.value = respondData
+                }
+            }
+
+            override fun onError(
+                message: String,
+                code: Int,
+                errorHashMap: JsonObject
+            ) {
+                _submitCheckOutMutableLiveData.value = ApiResWraper(
+                    code,
+                    message,
+                    false,
+                    errorHashMap,
+                )
+            }
+        })
+
+    }
+
 }

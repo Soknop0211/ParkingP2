@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.ActivityResult
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.daikou.p2parking.R
 import com.daikou.p2parking.base.BaseActivity
@@ -13,6 +15,7 @@ import com.daikou.p2parking.base.BetterActivityResult
 import com.daikou.p2parking.base.Config
 import com.daikou.p2parking.data.model.TicketModel
 import com.daikou.p2parking.databinding.ActivityCheckoutDetailBinding
+import com.daikou.p2parking.helper.AuthHelper
 import com.daikou.p2parking.helper.HelperUtil
 import com.daikou.p2parking.helper.HelperUtil.formatDatFromDatetime
 import com.daikou.p2parking.helper.HelperUtil.formatDate
@@ -21,6 +24,7 @@ import com.daikou.p2parking.helper.PermissionRequest
 import com.daikou.p2parking.helper.extension.setBackgroundTint
 import com.daikou.p2parking.ui.LotTypeActivity
 import com.daikou.p2parking.utility.RedirectClass
+import com.daikou.p2parking.view_model.LotTypeViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*
@@ -30,9 +34,16 @@ class CheckoutDetailActivity : BaseActivity() {
     private lateinit var binding : ActivityCheckoutDetailBinding
     private var  ticketModel: TicketModel? = null
     private var isPayByCash = true
+    private var mTicketNo : String = ""
+
+    private val lotTypeViewModel: LotTypeViewModel by viewModels {
+        factory
+    }
 
     companion object{
         const val TICKET_DATA_KEY = "ticket_data"
+        const val PAY_BY_CASH = "by_cash"
+        const val PAY_BY_ONLINE = "by_online"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,11 +51,29 @@ class CheckoutDetailActivity : BaseActivity() {
         binding = ActivityCheckoutDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initPrinterService()
-
         initView()
 
         initAction()
+
+        observableField()
+    }
+
+    private fun observableField() {
+        lotTypeViewModel.loadingLoginLiveData.observe(self()) {
+            binding.loadingView.root.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        lotTypeViewModel.submitCheckOutMutableLiveData.observe(this) { respondState ->
+            if (respondState.success) {
+                MessageUtils.showSuccess(this, null, resources.getString(R.string.payment_success) ) {
+                    finish()
+                    it.dismiss()
+                }
+            } else {
+                MessageUtils.showError(this, null, respondState.message)
+            }
+        }
+
     }
 
     private fun initView() {
@@ -69,12 +98,13 @@ class CheckoutDetailActivity : BaseActivity() {
             ) else "N/A"
 
             binding.timeInTv.text = ticketModel?.timeIn ?: dateStr
-
             val date = Date()
             ticketModel!!.timeOut = formatDate(date)
             ticketModel!!.amount = 3000.0
             binding.timeOutTv.text = ticketModel?.timeOut
             binding.textAmoutTv.text = HelperUtil.formatReilAmount(ticketModel!!.amount ?: 0.00)
+
+            mTicketNo = ticketModel?.ticketNo ?: ""
         }
     }
 
@@ -83,14 +113,7 @@ class CheckoutDetailActivity : BaseActivity() {
             it.isEnabled = false
             it.postDelayed({ it.isEnabled = true }, 500)
 
-            if (isPayByCash) {
-                Handler(Looper.myLooper()!!).postDelayed({
-                    MessageUtils.showSuccess(this, null, "Your payment success with cash payment.") {
-                        finish()
-                        it.dismiss()
-                    }
-                }, 3000)
-            }
+            submitCheckOut(PAY_BY_CASH)
         }
 
         binding.actionOnlinePayBtn.setOnClickListener { it ->
@@ -121,6 +144,13 @@ class CheckoutDetailActivity : BaseActivity() {
             binding.txtOnline.setTextColor(ContextCompat.getColor(this, R.color.dark_gray))
             binding.txtCase.setTextColor(ContextCompat.getColor(this, R.color.black))
         }
+    }
+
+    private fun submitCheckOut(mStatus : String) {
+        val requestBody = HashMap<String, Any>()
+        requestBody["status"] = mStatus
+        requestBody["ticket_no"] = mTicketNo
+        lotTypeViewModel.submitCheckOut(requestBody)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

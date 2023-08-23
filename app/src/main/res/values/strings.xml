@@ -33,5 +33,6 @@
     <string name="confirm_to_sign_out">Do you want to sign out?</string>
     <string name="no">No</string>
     <string name="yes_f">Yes</string>
+    <string name="payment_success">Your payment success with cash payment.</string>
 
 </resources>

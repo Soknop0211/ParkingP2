@@ -1,287 +1,299 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.checkout.CheckoutDetailActivity">
 
-    <include
-        android:id="@+id/appBarLayout"
-        layout="@layout/app_bar_layout"/>
-
-    <ScrollView
-        android:scrollbars="none"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <include
+            android:id="@+id/appBarLayout"
+            layout="@layout/app_bar_layout"/>
+
+        <ScrollView
+            android:scrollbars="none"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="15dp"
-                android:padding="10dp"
-                android:background="@drawable/round_outline_border_drawable">
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0dp">
-                    <ImageView
-                        android:id="@+id/image_car"
-                        android:layout_width="match_parent"
-                        android:scaleType="center"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/car"/>
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_marginVertical="10dp"
-                android:layout_marginHorizontal="20dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Eazy Parking"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="5dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/black"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginHorizontal="30dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="3dp">
-                    <TextView
-                        android:id="@+id/label_ticket_no"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ticket_no"
-                        android:textColor="@color/black"/>
-                    <TextView
-                        android:id="@+id/ticket_no"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="N/A"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="3dp">
-                    <TextView
-                        android:id="@+id/label_time_in"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/time_in"
-                        android:textColor="@color/black"/>
-                    <TextView
-                        android:id="@+id/time_in_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="N/A"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="3dp">
-                    <TextView
-                        android:id="@+id/label_time_out"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/time_out"
-                        android:textColor="@color/black"/>
-                    <TextView
-                        android:id="@+id/time_out_tv"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="N/A"
-                        android:layout_weight="1"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <!--    time use-->
-                <!--        <LinearLayout-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:paddingVertical="3dp">-->
-                <!--            <TextView-->
-                <!--                android:id="@+id/label_time_use"-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:text="@string/time_use"-->
-                <!--                android:textColor="@color/black"/>-->
-                <!--            <TextView-->
-                <!--                android:id="@+id/time_use_tv"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:text="N/A"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:textAlignment="textEnd"-->
-                <!--                android:textColor="@color/black"/>-->
-                <!--        </LinearLayout>-->
-
-                <!--    type -->
-                <!--        <LinearLayout-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="wrap_content"-->
-                <!--            android:paddingVertical="3dp">-->
-                <!--            <TextView-->
-                <!--                android:id="@+id/label_type"-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:text="@string/type"-->
-                <!--                android:textColor="@color/black"/>-->
-                <!--            <TextView-->
-                <!--                android:id="@+id/type_tv"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:text="N/A"-->
-                <!--                android:layout_weight="1"-->
-                <!--                android:textAlignment="textEnd"-->
-                <!--                android:textColor="@color/black"/>-->
-                <!--        </LinearLayout>-->
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="5dp"
-                    android:padding="5dp"
-                    android:layout_marginHorizontal="40dp"
-                    android:gravity="center"
-                    android:background="@drawable/round_outline_color_red_drawable">
-
-                    <TextView
-                        android:id="@+id/text_amout_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/red"
-                        android:text="2,000 Riels"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/black"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginHorizontal="30dp"/>
-
-
-            </LinearLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="15dp"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/select_payment_method"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom = "10dp"
-                    android:textColor="@color/black"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="15dp"
+                    android:padding="10dp"
+                    android:background="@drawable/round_outline_border_drawable">
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp">
+                        <ImageView
+                            android:id="@+id/image_car"
+                            android:layout_width="match_parent"
+                            android:scaleType="center"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/car"/>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_marginVertical="10dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
                     android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:id="@+id/action_pay_case_btn"
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:background="@drawable/shape_error"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:padding="10dp"
+                        android:layout_height="wrap_content"
+                        android:text="Eazy Parking"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="5dp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/black"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginHorizontal="30dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="3dp">
+                        <TextView
+                            android:id="@+id/label_ticket_no"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/ticket_no"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/ticket_no"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="N/A"
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="3dp">
+                        <TextView
+                            android:id="@+id/label_time_in"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/time_in"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/time_in_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="N/A"
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="3dp">
+                        <TextView
+                            android:id="@+id/label_time_out"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/time_out"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:id="@+id/time_out_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="N/A"
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/black"/>
+                    </LinearLayout>
+
+                    <!--    time use-->
+                    <!--        <LinearLayout-->
+                    <!--            android:layout_width="match_parent"-->
+                    <!--            android:layout_height="wrap_content"-->
+                    <!--            android:paddingVertical="3dp">-->
+                    <!--            <TextView-->
+                    <!--                android:id="@+id/label_time_use"-->
+                    <!--                android:layout_width="wrap_content"-->
+                    <!--                android:layout_height="wrap_content"-->
+                    <!--                android:text="@string/time_use"-->
+                    <!--                android:textColor="@color/black"/>-->
+                    <!--            <TextView-->
+                    <!--                android:id="@+id/time_use_tv"-->
+                    <!--                android:layout_width="0dp"-->
+                    <!--                android:layout_height="wrap_content"-->
+                    <!--                android:text="N/A"-->
+                    <!--                android:layout_weight="1"-->
+                    <!--                android:textAlignment="textEnd"-->
+                    <!--                android:textColor="@color/black"/>-->
+                    <!--        </LinearLayout>-->
+
+                    <!--    type -->
+                    <!--        <LinearLayout-->
+                    <!--            android:layout_width="match_parent"-->
+                    <!--            android:layout_height="wrap_content"-->
+                    <!--            android:paddingVertical="3dp">-->
+                    <!--            <TextView-->
+                    <!--                android:id="@+id/label_type"-->
+                    <!--                android:layout_width="wrap_content"-->
+                    <!--                android:layout_height="wrap_content"-->
+                    <!--                android:text="@string/type"-->
+                    <!--                android:textColor="@color/black"/>-->
+                    <!--            <TextView-->
+                    <!--                android:id="@+id/type_tv"-->
+                    <!--                android:layout_width="0dp"-->
+                    <!--                android:layout_height="wrap_content"-->
+                    <!--                android:text="N/A"-->
+                    <!--                android:layout_weight="1"-->
+                    <!--                android:textAlignment="textEnd"-->
+                    <!--                android:textColor="@color/black"/>-->
+                    <!--        </LinearLayout>-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="5dp"
+                        android:padding="5dp"
+                        android:layout_marginHorizontal="40dp"
+                        android:gravity="center"
+                        android:background="@drawable/round_outline_color_red_drawable">
+
+                        <TextView
+                            android:id="@+id/text_amout_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/red"
+                            android:text="2,000 Riels"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="@color/black"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginHorizontal="30dp"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/select_payment_method"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom = "10dp"
+                        android:textColor="@color/black"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/txtCase"
+                        <LinearLayout
+                            android:id="@+id/action_pay_case_btn"
                             android:layout_width="wrap_content"
+                            android:background="@drawable/shape_error"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:padding="10dp"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/txtCase"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="@string/pay_by_case"
+                                android:textColor="@color/black"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginHorizontal="10dp"
+                            android:id="@+id/action_online_pay_btn"
+                            android:layout_width="wrap_content"
+                            android:padding="10dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/pay_by_case"
-                            android:textColor="@color/black"/>
+                            android:background="@drawable/shape_error"
+                            android:backgroundTint="@color/light_gray"
+                            android:foreground="?android:attr/selectableItemBackground">
+
+                            <TextView
+                                android:id="@+id/txtOnline"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="@string/online_pay"
+                                android:paddingHorizontal="10dp"
+                                android:textColor="@color/dark_gray"/>
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_marginHorizontal="10dp"
-                        android:id="@+id/action_online_pay_btn"
-                        android:layout_width="wrap_content"
-                        android:padding="10dp"
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:paddingHorizontal="15dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/action_submit_btn"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/shape_error"
-                        android:backgroundTint="@color/light_gray"
-                        android:foreground="?android:attr/selectableItemBackground">
-
-                        <TextView
-                            android:id="@+id/txtOnline"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/online_pay"
-                            android:paddingHorizontal="10dp"
-                            android:textColor="@color/dark_gray"/>
-
-                    </LinearLayout>
-
+                        style="@style/ButtonStyle"
+                        android:text="@string/submit"
+                        app:strokeColor="@color/colorSecondaryPrimary"
+                        android:layout_weight="1"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:paddingHorizontal="15dp">
+        </ScrollView>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/action_submit_btn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    style="@style/ButtonStyle"
-                    android:text="@string/submit"
-                    app:strokeColor="@color/colorSecondaryPrimary"
-                    android:layout_weight="1"/>
+    </LinearLayout>
 
-            </LinearLayout>
+    <include
+        android:id="@+id/loading_view"
+        layout="@layout/loading_layout"
+        android:visibility="gone" />
 
-        </LinearLayout>
-
-    </ScrollView>
-
-</LinearLayout>
+</RelativeLayout>

@@ -55,7 +55,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.LotTypeActivity"
-            android:excludeFromRecents="true"
             android:exported="false"
             android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert"/>
     </application>
