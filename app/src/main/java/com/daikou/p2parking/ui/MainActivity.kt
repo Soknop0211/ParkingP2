@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
+import androidx.appcompat.widget.ThemedSpinnerAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import com.daikou.p2parking.R
 import com.daikou.p2parking.apdapter.HomeItemAdapter
@@ -34,8 +35,7 @@ class MainActivity : BaseActivity() {
 
     private lateinit var binding : ActivityMainBinding
     private lateinit var homeItemAdapter: HomeItemAdapter
-    private var imageString : String? = null
-    private lateinit var ticketModel : TicketModel
+    private var imgBase64 : String? = null
 
     private var mLotTypeModel: LotTypeModel?= null
 
@@ -99,13 +99,11 @@ class MainActivity : BaseActivity() {
         lotTypeViewModel.submitCheckInMutableLiveData.observe(self()) {
             if (it != null && it.success) {
 
-                ticketModel = TicketModel()
-                ticketModel.image = imageString
-                ticketModel.ticketNo = "T1124N0001"
-                val date = Date()
-                ticketModel.timeIn = HelperUtil.formatDate(date)
+                if (it.data != null) {
+                    it.data.imgBase64 = imgBase64
 
-                SunmiPrintHelper.getInstance().printTicket(ticketModel, TicketType.CheckIn)
+                    SunmiPrintHelper.getInstance().printTicket(it.data, TicketType.CheckIn)
+                }
             } else {
                 MessageUtils.showError(this, null, it.message)
             }
@@ -144,19 +142,22 @@ class MainActivity : BaseActivity() {
         if (resultCode == Activity.RESULT_OK){
             if (data != null) {
                 val imageUri = data.data
-                //                val bitmap = imageUri?.let { HelperUtil.convertBitmap(this, it) }
-                //                imageString = bitmap?.let { HelperUtil.convertToBase64(it) }
-                imageString = imageUri.toString()
 
                 var bitmap = imageUri?.let { HelperUtil.convertBitmap(this, it) }
                 bitmap = bitmap?.let { HelperUtil.getResizedBitmap(it, 700) }
 
                 if (bitmap != null && mLotTypeModel != null) {
                     val pathImage: String? = HelperUtil.convert(bitmap)
+                    imgBase64 = pathImage
 
                     val requestBody = HashMap<String, Any>()
                     requestBody["lot_type_id"] = mLotTypeModel?.id ?: ""
-                    requestBody["image"] = pathImage ?: ""
+                    if (pathImage != null) {
+                        requestBody["image"] = String.format(
+                            "data:image/jpeg;base64,%s",
+                            pathImage
+                        )
+                    }
 
                     lotTypeViewModel.submitChecking(requestBody)
                 }

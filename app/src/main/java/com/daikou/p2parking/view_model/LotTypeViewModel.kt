@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.daikou.p2parking.base.ApiResWraper
 import com.daikou.p2parking.base.base.BaseViewModel
 import com.daikou.p2parking.data.call_back.IApiResWrapper
+import com.daikou.p2parking.data.model.TicketModel
 import com.daikou.p2parking.data.repository.Repository
 import com.daikou.p2parking.model.LotTypeModel
 import com.google.gson.JsonElement
@@ -47,20 +48,20 @@ class LotTypeViewModel @Inject constructor(
     }
 
     /**** Check In *****/
-    private var _submitCheckInMutableLiveData: MutableLiveData<ApiResWraper<JsonElement>> =
-        MutableLiveData<ApiResWraper<JsonElement>>()
+    private var _submitCheckInMutableLiveData: MutableLiveData<ApiResWraper<TicketModel>> =
+        MutableLiveData<ApiResWraper<TicketModel>>()
 
     val submitCheckInMutableLiveData get() = _submitCheckInMutableLiveData
 
     fun submitChecking(requestBody: HashMap<String, Any>) {
-        val requestFlow: Flow<ApiResWraper<JsonElement>> =
+        val requestFlow: Flow<ApiResWraper<TicketModel>> =
             repository.submitChecking(requestBody)
-        submit(requestFlow, object : IApiResWrapper<ApiResWraper<JsonElement>> {
+        submit(requestFlow, object : IApiResWrapper<ApiResWraper<TicketModel>> {
             override fun onLoading(hasLoading: Boolean) {
                 _loadingLoginLiveData.value = hasLoading
             }
 
-            override fun onData(respondData: ApiResWraper<JsonElement>) {
+            override fun onData(respondData: ApiResWraper<TicketModel>) {
                 if (respondData.success) {
                     submitCheckInMutableLiveData.value = respondData
                 }

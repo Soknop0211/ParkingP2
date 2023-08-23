@@ -59,6 +59,15 @@ object HelperUtil {
         return printedDate
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun formatDatFromDatetime(dateTime : String, oldPatten : String, newPattern: String) : String{
+        val old = SimpleDateFormat(oldPatten)
+        val new = SimpleDateFormat(newPattern)
+        val date = old.parse(dateTime)
+        val printedDate = date?.let { new.format(it) }
+        return printedDate ?: ""
+    }
+
     fun convertToBase64(bitmap: Bitmap) : String {
         val outputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, outputStream)

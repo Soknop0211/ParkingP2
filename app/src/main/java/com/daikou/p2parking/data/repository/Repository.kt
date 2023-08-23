@@ -2,6 +2,7 @@ package com.daikou.p2parking.data.repository
 
 import android.content.Context
 import com.daikou.p2parking.base.ApiResWraper
+import com.daikou.p2parking.data.model.TicketModel
 import com.daikou.p2parking.model.User
 import com.daikou.p2parking.data.remote.ParkingApi
 import com.daikou.p2parking.model.LotTypeModel
@@ -28,7 +29,7 @@ class Repository
         emit(respond)
     }
 
-    fun submitChecking(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<JsonElement>> = flow {
+    fun submitChecking(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<TicketModel>> = flow {
         val respond = apiService.submitChecking(bodyMap)
         emit(respond)
     }

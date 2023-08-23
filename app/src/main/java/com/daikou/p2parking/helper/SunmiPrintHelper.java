@@ -18,6 +18,8 @@ import com.sunmi.peripheral.printer.InnerResultCallback;
 import com.sunmi.peripheral.printer.SunmiPrinterService;
 import com.sunmi.peripheral.printer.WoyouConsts;
 
+import java.util.Date;
+
 /**
  * <pre>
  *      This class is used to demonstrate various printing effects
@@ -148,7 +150,13 @@ public class SunmiPrintHelper {
             sunmiPrinterService.printText(ticketModel.getTicketNo()== null ? "" : ticketModel.getTicketNo() + "\n", null);
             if(ticketType == TicketType.CheckIn) {
                 sunmiPrinterService.printText("TIME IN: ", null);
-                sunmiPrinterService.printText(ticketModel.getTimeIn() == null ? "" : ticketModel.getTimeIn() + "\n\n", null);
+
+                String dateStr = ticketModel.getFromDate() != null ?
+                    HelperUtil.INSTANCE.formatDatFromDatetime(ticketModel.getFromDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd h:mm a") :
+                    HelperUtil.INSTANCE.formatDate(new Date());
+
+                sunmiPrinterService.printText(dateStr + "\n\n", null);
+
                 Gson gson = new Gson();
                 String ticketModelJson = (String) gson.toJson(ticketModel);
 
@@ -158,9 +166,14 @@ public class SunmiPrintHelper {
                 sunmiPrinterService.printBitmap(bitmap, null);
 
             } else if (ticketType == TicketType.CheckOut) {
+                String dateStr = ticketModel.getFromDate() != null ?
+                        HelperUtil.INSTANCE.formatDatFromDatetime(ticketModel.getFromDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd h:mm a") :
+                        HelperUtil.INSTANCE.formatDate(new Date());
+
+
                 sunmiPrinterService.printText("\n", null);
                 sunmiPrinterService.printText("TIME IN: ", null);
-                sunmiPrinterService.printText(ticketModel.getTimeIn() == null ? "" : ticketModel.getTimeIn() + "\n\n", null);
+                sunmiPrinterService.printText(dateStr + "\n\n", null);
                 sunmiPrinterService.printText("TIME OUT: ", null);
                 sunmiPrinterService.printText(ticketModel.getTimeOut() == null ? "" : ticketModel.getTimeOut() + "\n\n", null);
 

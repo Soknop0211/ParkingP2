@@ -52,7 +52,7 @@ class CheckoutDetailActivity : BaseActivity() {
         }
 
         if (ticketModel != null){
-            HelperUtil.loadImageToImageView(this, ticketModel!!.image?: "", binding.imageCar)
+            HelperUtil.loadImageToImageView(this, ticketModel!!.imgBase64?: "", binding.imageCar)
             binding.ticketNo.text = ticketModel!!.ticketNo ?: "N/A"
             binding.timeInTv.text = ticketModel!!.timeIn ?: "N/A"
             val date = Date()
