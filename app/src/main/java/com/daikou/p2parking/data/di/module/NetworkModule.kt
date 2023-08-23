@@ -26,7 +26,6 @@ import javax.inject.Singleton
 @Module
 object NetworkModule {
 
-
     @Provides
     @Singleton
     fun provideContext(app: Application): Context {

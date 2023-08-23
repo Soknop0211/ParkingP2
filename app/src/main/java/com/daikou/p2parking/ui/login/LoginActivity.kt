@@ -7,14 +7,18 @@ import android.view.View
 import androidx.activity.viewModels
 import com.daikou.p2parking.R
 import com.daikou.p2parking.base.BaseActivity
+import com.daikou.p2parking.base.Config
 import com.daikou.p2parking.base.SimpleBaseActivity
 import com.daikou.p2parking.databinding.ActivityLoginBinding
 import com.daikou.p2parking.helper.AuthHelper
 import com.daikou.p2parking.helper.CustomSetOnClickViewListener
 import com.daikou.p2parking.helper.MessageUtils
 import com.daikou.p2parking.model.Constants
+import com.daikou.p2parking.model.User
 import com.daikou.p2parking.utility.RedirectClass
 import com.daikou.p2parking.view_model.LoginViewModel
+import com.google.gson.JsonObject
+import com.google.gson.JsonSyntaxException
 
 class LoginActivity : SimpleBaseActivity() {
 
@@ -57,23 +61,11 @@ class LoginActivity : SimpleBaseActivity() {
                     //new code
                     accessToken?.let { token ->
                         AuthHelper.saveAccessToken(this, token)
-//                        AuthHelper.saveAccessToken(this, token)
-//                        getUserFromGson(jsonObject)?.let {
-//                            saveUserToSharePreference(it)
-//                            savePassWordUser(binding.passwordTf.text.toString())
-//                            RedirectClass.gotoMainActivity(self())
-//                        }
-                    } ?: MessageUtils.showError(this, null, "Token is null")
-                    //for old code checking
-                    /*accessToken?.let { token ->
-                        EazyTaxiHelper.setSharePreference(this, Constants.Token.API_TOKEN, token)
-                        val user = getUserUserToSharePreference()
-                        if (user == null) {
-                            userInfoVM.fetchUserInfo()
-                        } else {
+                        getUserFromGson(jsonObject)?.let {
+                            AuthHelper.saveUserSharePreference(this, it)
                             RedirectClass.gotoMainActivity(self())
                         }
-                    } ?: globalShowError("Token is null")*/
+                    } ?: MessageUtils.showError(this, null, "Token is null")
                 }
             } else {
                 MessageUtils.showError(this, null, respondState.message)
@@ -106,5 +98,15 @@ class LoginActivity : SimpleBaseActivity() {
                 loginViewModel.login(requestBodyMap)
             }
         })
+    }
+
+    private fun getUserFromGson(jsonObject: JsonObject): User? {
+        try {
+            val userObject = jsonObject["user"].asJsonObject
+            return Config.GsonConverterHelper.getJsonObjectToGenericClass<User>(userObject.toString())
+        } catch (jsonSyntax: JsonSyntaxException) {
+            jsonSyntax.printStackTrace()
+        }
+        return null
     }
 }

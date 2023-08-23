@@ -41,8 +41,4 @@ object AuthHelper{
         HelperUtil.setStringSharePreference(context, Constants.Auth.TOKEN_KEY, "")
     }
 
-    fun KessLogDataGson(): CustomHttpLogging {
-        return KessLogDataGson()
-    }
-
 }

@@ -68,7 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_marginTop="45dp"
+                    android:layout_marginTop="40dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +98,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/enter_password"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="10dp"
                         app:passwordToggleEnabled="true">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -113,7 +113,7 @@
 
                     <Space
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"/>
+                        android:layout_height="30dp"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/action_login_mtb"
