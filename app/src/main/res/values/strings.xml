@@ -28,5 +28,6 @@
     <string name="ssl_handshake_aborted">The Server has closed the connection</string>
     <string name="please_enter_a_valid_mobile_number">Please enter a valid phone number</string>
     <string name="please_enter_password">Please enter password</string>
+    <string name="lot_type">Lot Type</string>
 
 </resources>

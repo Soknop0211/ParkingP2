@@ -7,12 +7,8 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.activity.result.ActivityResult
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.daikou.p2parking.helper.AuthHelper
 import com.daikou.p2parking.helper.SunmiPrintHelper
-import dagger.android.support.DaggerAppCompatActivity
-import javax.inject.Inject
 
 open class BaseActivity : BaseCoreActivity() {
 

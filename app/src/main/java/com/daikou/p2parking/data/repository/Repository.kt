@@ -4,6 +4,8 @@ import android.content.Context
 import com.daikou.p2parking.base.ApiResWraper
 import com.daikou.p2parking.model.User
 import com.daikou.p2parking.data.remote.ParkingApi
+import com.daikou.p2parking.model.LotTypeModel
+import com.daikou.p2parking.view_model.LotTypeViewModel
 
 import com.google.gson.JsonElement
 import kotlinx.coroutines.flow.Flow
@@ -21,66 +23,13 @@ class Repository
         emit(respond)
     }
 
-    fun logout(): Flow<ApiResWraper<JsonElement>> = flow {
-        val respond = apiService.logout()
+    fun fetchLotType(): Flow<ApiResWraper<List<LotTypeModel>>> = flow {
+        val respond = apiService.fetchLotType()
         emit(respond)
     }
 
-    fun userInfo(): Flow<ApiResWraper<User>> = flow {
-        val respond = apiService.userInfo()
+    fun submitChecking(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<JsonElement>> = flow {
+        val respond = apiService.submitChecking(bodyMap)
         emit(respond)
     }
-
-    fun submitChangePwd(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<JsonElement>> = flow {
-        val respond = apiService.submitChangePwd(bodyMap)
-        emit(respond)
-    }
-
-    fun submitRequestOtp(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<JsonElement>> = flow {
-        val respond = apiService.submitRequestOtp(bodyMap)
-        emit(respond)
-    }
-
-    fun submitVerifyOtp(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<JsonElement>> = flow {
-        val respond = apiService.submitVerifyOtp(bodyMap)
-        emit(respond)
-    }
-
-    fun submitChangePasswordByOtp(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<JsonElement>> =
-        flow {
-            val respond = apiService.submitChangePasswordByOtp(bodyMap)
-            emit(respond)
-        }
-
-    fun updateUserInfo(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<User>> = flow {
-        val respond = apiService.updateUserInfo(bodyMap)
-        emit(respond)
-    }
-
-
-    fun submitGetTaxiDriver(
-        map: HashMap<String, Any>,
-    ): Flow<ApiResWraper<JsonElement>> =
-        flow {
-            val respond = apiService.submitGetTaxiDriver(map)
-            emit(respond)
-        }
-
-    fun submitCancelBookingTaxiV2(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<JsonElement>> =
-        flow {
-            val respond = apiService.cancelBookingCustomer(bodyMap)
-            emit(respond)
-        }
-
-    fun submitAcceptBookingTaxi(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<JsonElement>> =
-        flow {
-            val respond = apiService.acceptBookingDriverTaxi(bodyMap)
-            emit(respond)
-        }
-
-    fun submitPaidBookingCustomer(bodyMap: HashMap<String, Any>): Flow<ApiResWraper<JsonElement>> =
-        flow {
-            val respond = apiService.submitPaidBookingCustomer(bodyMap)
-            emit(respond)
-        }
 }

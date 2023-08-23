@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,24 +7,37 @@
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
-    <ImageView
-        android:id="@+id/banner_img"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/ezpass_welcome_logo" />
+        android:layout_height="wrap_content">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewHome"
-        android:layout_width="match_parent"
-        android:nestedScrollingEnabled="false"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        android:layout_marginTop="10dp"
-        app:spanCount="2"
-        tools:itemCount="2"
-        tools:listitem="@layout/home_item_layout"
-        android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/banner_img"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ezpass_welcome_logo"
+            android:contentDescription="@null" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewHome"
+            android:layout_width="match_parent"
+            android:nestedScrollingEnabled="false"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:layout_marginTop="10dp"
+            app:spanCount="2"
+            tools:itemCount="2"
+            tools:listitem="@layout/home_item_layout"
+            android:layout_height="wrap_content"/>
 
 
-</LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/loading_view"
+        layout="@layout/loading_layout"
+        android:visibility="gone" />
+
+</RelativeLayout>
