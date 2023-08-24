@@ -208,7 +208,7 @@ class MainActivity : BaseActivity() {
                     // val intent = Intent(this@MainActivity, ScanActivity::class.java)
                     // startActivity(intent)
                     val options = ScanOptions()
-                    options.setPrompt("Scan QR Code")
+                    options.setPrompt(resources.getString(R.string.scan_qr))
                     options.setCameraId(0) // Use a specific camera of the device
 
                     options.setBeepEnabled(true)

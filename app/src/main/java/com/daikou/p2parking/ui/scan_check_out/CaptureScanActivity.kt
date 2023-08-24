@@ -30,8 +30,6 @@ class CaptureScanActivity : Activity (){
         val imageView = findViewById<ImageView>(R.id.iconBack)
         imageView.visibility = View.VISIBLE
         imageView.setOnClickListener { finish() }
-        val titleToolbar = findViewById<TextView>(R.id.title)
-        titleToolbar.text = resources.getText(R.string.check_out)
     }
 
     private fun initializeContent(): DecoratedBarcodeView {
