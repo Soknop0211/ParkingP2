@@ -284,7 +284,7 @@ object MessageUtils {
                     .setConfirmText(
                         context.getString(R.string.yes_f)
                     )
-                    .setCancelButtonTextColor(R.color.light_gray)
+                    .setCancelButtonTextColor(R.color.colorGPASPrimaryDark)
                     .showCancelButton(true)
                     .setConfirmClickListener(onSweetClickListener)
             alertDialog.setCanceledOnTouchOutside(false)

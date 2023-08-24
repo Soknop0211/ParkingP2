@@ -25,6 +25,7 @@
 
     <color name="test">#00381D1D</color>
     <color name="white">#FFFFFF</color>
+    <color name="light_grey_">#EAEDED</color>
     <color name="light_gray">#bfbfbf</color>
     <color name="brand">#3d95ce</color>
     <color name="blue_gray">#5a636c</color>

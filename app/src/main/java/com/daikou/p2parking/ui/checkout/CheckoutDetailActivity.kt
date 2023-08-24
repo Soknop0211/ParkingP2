@@ -22,6 +22,7 @@ import com.daikou.p2parking.helper.HelperUtil.formatDate
 import com.daikou.p2parking.helper.MessageUtils
 import com.daikou.p2parking.helper.PermissionRequest
 import com.daikou.p2parking.helper.extension.setBackgroundTint
+import com.daikou.p2parking.model.User
 import com.daikou.p2parking.ui.LotTypeActivity
 import com.daikou.p2parking.utility.RedirectClass
 import com.daikou.p2parking.view_model.LotTypeViewModel
@@ -44,6 +45,7 @@ class CheckoutDetailActivity : BaseActivity() {
         const val TICKET_DATA_KEY = "ticket_data"
         const val PAY_BY_CASH = "by_cash"
         const val PAY_BY_ONLINE = "by_online"
+        const val BY_PREVIEW = "preview"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,35 +83,41 @@ class CheckoutDetailActivity : BaseActivity() {
         this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         this.supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        binding.appBarLayout.title.text = getString(R.string.check_out_detail)
+        binding.appBarLayout.title.text = getString(R.string.check_out_detail).uppercase()
 
         if (intent.hasExtra(TICKET_DATA_KEY) && intent.getStringExtra(TICKET_DATA_KEY) != null){
-            val gson = Gson()
             val jsonData = intent.getStringExtra(TICKET_DATA_KEY)
-            val ticketModelTypeToken = object : TypeToken<TicketModel>(){}.type
-            ticketModel = gson.fromJson(jsonData,ticketModelTypeToken )
+            ticketModel = Config.GsonConverterHelper.getJsonObjectToGenericClass<TicketModel>(jsonData)
         }
 
         if (ticketModel != null) {
-            HelperUtil.loadImageToImageView(this, ticketModel!!.imgBase64?: "", binding.imageCar)
+            HelperUtil.loadImageToImageView(this, ticketModel?.image ?: "", binding.imageCar)
+
             binding.ticketNo.text = ticketModel?.ticketNo ?: "N/A"
-            val dateStr = if (ticketModel!!.fromDate != null) formatDatFromDatetime(
+
+            val fromDate = if (ticketModel?.fromDate != null) formatDatFromDatetime(
                 ticketModel!!.fromDate!!, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd h:mm a"
             ) else "N/A"
 
-            binding.timeInTv.text = ticketModel?.timeIn ?: dateStr
-            val date = Date()
-            ticketModel!!.timeOut = formatDate(date)
-            ticketModel!!.amount = 3000.0
-            binding.timeOutTv.text = ticketModel?.timeOut
-            binding.textAmoutTv.text = HelperUtil.formatReilAmount(ticketModel!!.amount ?: 0.00)
+            binding.timeInTv.text = fromDate
+
+            val toDate = if (ticketModel?.toDate != null) formatDatFromDatetime(
+                ticketModel?.toDate!!, "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd h:mm a"
+            ) else "N/A"
+
+            binding.timeOutTv.text = toDate
+
+            binding.textAmoutTv.text = HelperUtil.formatDollaAmount(ticketModel?.totalPrice ?: 0.00)
+
+            binding.timeUseTv.text = ticketModel?.duration ?: ". . ."
+
 
             mTicketNo = ticketModel?.ticketNo ?: ""
         }
     }
 
     private fun initAction(){
-        binding.actionSubmitBtn.setOnClickListener { it ->
+        binding.actionSubmitBtn.setOnClickListener {
             it.isEnabled = false
             it.postDelayed({ it.isEnabled = true }, 500)
 
@@ -121,6 +129,7 @@ class CheckoutDetailActivity : BaseActivity() {
             it.postDelayed({ it.isEnabled = true }, 500)
 
             RedirectClass.gotoDoPaymentActivity(this,
+                Config.GsonConverterHelper.convertGenericClassToJson(ticketModel),
                 object : BetterActivityResult.OnActivityResult<ActivityResult> {
                     override fun onActivityResult(result: ActivityResult) {
                         if (result.resultCode == RESULT_OK) {
@@ -131,10 +140,6 @@ class CheckoutDetailActivity : BaseActivity() {
                         }
                     }
                 })
-
-            val intent  = Intent(this@CheckoutDetailActivity, DoPaymentActivity::class.java)
-            gotoActivity(this, intent)
-
         }
 
         binding.actionPayCaseBtn.setOnClickListener {

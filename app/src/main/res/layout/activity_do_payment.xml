@@ -47,7 +47,7 @@
                 android:id="@+id/receiver_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Eazy Parking"
+                android:text="@string/app_name"
                 android:textSize="18sp"
                 android:layout_marginStart="30dp"/>
 
@@ -60,6 +60,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:text="3,000 KHR"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

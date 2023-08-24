@@ -170,17 +170,20 @@ public class SunmiPrintHelper {
                         HelperUtil.INSTANCE.formatDatFromDatetime(ticketModel.getFromDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd h:mm a") :
                         HelperUtil.INSTANCE.formatDate(new Date());
 
+                String dateToStr = ticketModel.getToDate() != null ?
+                        HelperUtil.INSTANCE.formatDatFromDatetime(ticketModel.getToDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd h:mm a") :
+                        HelperUtil.INSTANCE.formatDate(new Date());
 
                 sunmiPrinterService.printText("\n", null);
                 sunmiPrinterService.printText("TIME IN: ", null);
                 sunmiPrinterService.printText(dateStr + "\n\n", null);
                 sunmiPrinterService.printText("TIME OUT: ", null);
-                sunmiPrinterService.printText(ticketModel.getTimeOut() == null ? "" : ticketModel.getTimeOut() + "\n\n", null);
+                sunmiPrinterService.printText(dateToStr + "\n\n", null);
 
                 sunmiPrinterService.setFontSize(40f, null);
                 sunmiPrinterService.setAlignment(1, null);
                 sunmiPrinterService.printText("\n", null);
-                sunmiPrinterService.printText(ticketModel.getAmount() == null? "" : HelperUtil.INSTANCE.formatReilAmount(ticketModel.getAmount()), null );
+                sunmiPrinterService.printText(ticketModel.getTotalPrice() == null? "" : HelperUtil.INSTANCE.formatDollaAmount(ticketModel.getTotalPrice()), null );
                 sunmiPrinterService.printText("\n\n", null);
             }
             sunmiPrinterService.lineWrap(5, null);

@@ -12,6 +12,7 @@ import android.util.Base64
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.daikou.p2parking.R
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
@@ -75,14 +76,15 @@ object HelperUtil {
         return BitmapFactory.decodeByteArray(imageByte, 0, imageByte.size)
     }
 
-    fun formatReilAmount(amount: Double) :String{
-        return String.format("%.2f Riels",amount )
+    fun formatDollaAmount(amount: Double) :String{
+        return String.format("%.2f $",amount )
     }
 
     fun loadImageToImageView(context : Context, image : Any, imageView: ImageView){
         Glide.with(context)
             .load(image)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .placeholder(R.drawable.car)
             .into(imageView)
     }
 

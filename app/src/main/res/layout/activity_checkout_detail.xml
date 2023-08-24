@@ -5,11 +5,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:background="@color/light_grey_"
     tools:context=".ui.checkout.CheckoutDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <include
@@ -26,38 +27,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_margin="15dp"
-                    android:padding="10dp"
-                    android:background="@drawable/round_outline_border_drawable">
+                    android:background="@color/white"
+                    android:layout_height="200dp">
+
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="15dp"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="0dp">
+
                         <ImageView
                             android:id="@+id/image_car"
                             android:layout_width="match_parent"
                             android:scaleType="center"
                             android:layout_height="match_parent"
                             android:src="@drawable/car"/>
+
                     </androidx.cardview.widget.CardView>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_marginVertical="10dp"
-                    android:layout_marginHorizontal="20dp"
                     android:gravity="center"
                     android:orientation="vertical"
+                    android:padding="5dp"
+                    android:background="@color/white"
                     android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Eazy Parking"
+                        android:text="@string/eazy_parking"
                         android:textSize="20sp"
                         android:layout_marginBottom="5dp"
                         android:textColor="@color/black"
@@ -95,12 +101,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingVertical="3dp">
+
                         <TextView
                             android:id="@+id/label_time_in"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/time_in"
                             android:textColor="@color/black"/>
+
                         <TextView
                             android:id="@+id/time_in_tv"
                             android:layout_width="0dp"
@@ -109,12 +117,14 @@
                             android:layout_weight="1"
                             android:textAlignment="textEnd"
                             android:textColor="@color/black"/>
+
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingVertical="3dp">
+
                         <TextView
                             android:id="@+id/label_time_out"
                             android:layout_width="wrap_content"
@@ -129,49 +139,33 @@
                             android:layout_weight="1"
                             android:textAlignment="textEnd"
                             android:textColor="@color/black"/>
+
                     </LinearLayout>
 
                     <!--    time use-->
-                    <!--        <LinearLayout-->
-                    <!--            android:layout_width="match_parent"-->
-                    <!--            android:layout_height="wrap_content"-->
-                    <!--            android:paddingVertical="3dp">-->
-                    <!--            <TextView-->
-                    <!--                android:id="@+id/label_time_use"-->
-                    <!--                android:layout_width="wrap_content"-->
-                    <!--                android:layout_height="wrap_content"-->
-                    <!--                android:text="@string/time_use"-->
-                    <!--                android:textColor="@color/black"/>-->
-                    <!--            <TextView-->
-                    <!--                android:id="@+id/time_use_tv"-->
-                    <!--                android:layout_width="0dp"-->
-                    <!--                android:layout_height="wrap_content"-->
-                    <!--                android:text="N/A"-->
-                    <!--                android:layout_weight="1"-->
-                    <!--                android:textAlignment="textEnd"-->
-                    <!--                android:textColor="@color/black"/>-->
-                    <!--        </LinearLayout>-->
 
-                    <!--    type -->
-                    <!--        <LinearLayout-->
-                    <!--            android:layout_width="match_parent"-->
-                    <!--            android:layout_height="wrap_content"-->
-                    <!--            android:paddingVertical="3dp">-->
-                    <!--            <TextView-->
-                    <!--                android:id="@+id/label_type"-->
-                    <!--                android:layout_width="wrap_content"-->
-                    <!--                android:layout_height="wrap_content"-->
-                    <!--                android:text="@string/type"-->
-                    <!--                android:textColor="@color/black"/>-->
-                    <!--            <TextView-->
-                    <!--                android:id="@+id/type_tv"-->
-                    <!--                android:layout_width="0dp"-->
-                    <!--                android:layout_height="wrap_content"-->
-                    <!--                android:text="N/A"-->
-                    <!--                android:layout_weight="1"-->
-                    <!--                android:textAlignment="textEnd"-->
-                    <!--                android:textColor="@color/black"/>-->
-                    <!--        </LinearLayout>-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="3dp">
+
+                        <TextView
+                            android:id="@+id/label_time_use"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/time_use"
+                            android:textColor="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/time_use_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:text="N/A"
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -188,36 +182,31 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/red"
-                            android:text="2,000 Riels"
+                            android:text="0.0"
                             android:textSize="18sp"
                             android:textStyle="bold"/>
 
                     </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@color/black"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginHorizontal="30dp"/>
-
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="15dp"
-                    android:orientation="vertical">
+                    android:layout_marginVertical="5dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="50dp"
+                    android:padding="15dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:text="@string/select_payment_method"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom = "10dp"
-                        android:textColor="@color/black"/>
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -226,11 +215,11 @@
                         <LinearLayout
                             android:id="@+id/action_pay_case_btn"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:background="@drawable/shape_error"
                             android:backgroundTint="@color/colorPrimary"
                             android:foreground="?android:attr/selectableItemBackground"
-                            android:padding="10dp"
-                            android:layout_height="wrap_content">
+                            android:padding="10dp">
 
                             <TextView
                                 android:id="@+id/txtCase"
@@ -238,28 +227,28 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="@string/pay_by_case"
-                                android:textColor="@color/black"/>
+                                android:textColor="@color/black" />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_marginHorizontal="10dp"
                             android:id="@+id/action_online_pay_btn"
                             android:layout_width="wrap_content"
-                            android:padding="10dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="10dp"
                             android:background="@drawable/shape_error"
                             android:backgroundTint="@color/light_gray"
-                            android:foreground="?android:attr/selectableItemBackground">
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:padding="10dp">
 
                             <TextView
                                 android:id="@+id/txtOnline"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:text="@string/online_pay"
                                 android:paddingHorizontal="10dp"
-                                android:textColor="@color/dark_gray"/>
+                                android:text="@string/online_pay"
+                                android:textColor="@color/dark_gray" />
 
                         </LinearLayout>
 
@@ -268,26 +257,28 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:paddingHorizontal="15dp">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/action_submit_btn"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        style="@style/ButtonStyle"
-                        android:text="@string/submit"
-                        app:strokeColor="@color/colorSecondaryPrimary"
-                        android:layout_weight="1"/>
-
-                </LinearLayout>
-
             </LinearLayout>
 
         </ScrollView>
+
+        <LinearLayout
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_view_card"
+            android:backgroundTint="@color/colorPrimary"
+            android:layout_margin="10dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/action_submit_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/ButtonStyle"
+                android:text="@string/submit"
+                android:textColor="@color/white"
+                app:strokeColor="@color/colorSecondaryPrimary"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -106,6 +106,8 @@ dependencies {
     def paging_version = "2.1.2" /*"3.0.1"*/
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
     kapt 'com.android.databinding:compiler:3.1.2'
+
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
 }
 
 kapt {

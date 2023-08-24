@@ -93,7 +93,7 @@ class CheckInActivity : BaseActivity() {
 
     private fun initTicket() : TicketModel{
         ticketModel = TicketModel()
-        ticketModel.imgBase64 = imageString
+        ticketModel.image = imageString
         ticketModel.ticketNo = "T1124N0001"
         val date = Date()
         return ticketModel
