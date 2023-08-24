@@ -133,12 +133,11 @@ public class SunmiPrintHelper {
         try {
             sunmiPrinterService.setAlignment(1, null);
 
-            sunmiPrinterService.printText("\n", null);
             sunmiPrinterService.setFontSize(40f, null);
             if(ticketType == TicketType.CheckIn) {
-                sunmiPrinterService.printText("Parking Ticket\n\n", null);
+                sunmiPrinterService.printText("Parking Ticket\n", null);
             } else if (ticketType == TicketType.CheckOut) {
-                sunmiPrinterService.printText("Parking Checkout\n\n", null);
+                sunmiPrinterService.printText("Parking Checkout\n", null);
             }
 
             sunmiPrinterService.setFontSize(25f, null);
@@ -146,7 +145,7 @@ public class SunmiPrintHelper {
 
             sunmiPrinterService.setAlignment(0, null);
 
-            sunmiPrinterService.printText("TICKET NO: ", null);
+            sunmiPrinterService.printText("NO: ", null);
             sunmiPrinterService.printText(ticketModel.getTicketNo()== null ? "" : ticketModel.getTicketNo() + "\n", null);
             if(ticketType == TicketType.CheckIn) {
                 sunmiPrinterService.printText("TIME IN: ", null);
@@ -155,13 +154,12 @@ public class SunmiPrintHelper {
                     HelperUtil.INSTANCE.formatDatFromDatetime(ticketModel.getFromDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd h:mm a") :
                     HelperUtil.INSTANCE.formatDate(new Date());
 
-                sunmiPrinterService.printText(dateStr + "\n\n", null);
+                sunmiPrinterService.printText(dateStr + "\n", null);
 
                 Gson gson = new Gson();
-                String ticketModelJson = (String) gson.toJson(ticketModel);
+                String ticketModelJson = (String) gson.toJson(ticketModel.getTicketNo() != null ? ticketModel.getTicketNo() : "");
 
                 sunmiPrinterService.setAlignment(1, null);
-                sunmiPrinterService.printText("QR Code\n\n", null);
                 Bitmap bitmap = HelperUtil.INSTANCE.generateQRCode(ticketModelJson, 350, 350);
                 sunmiPrinterService.printBitmap(bitmap, null);
 
@@ -176,17 +174,57 @@ public class SunmiPrintHelper {
 
                 sunmiPrinterService.printText("\n", null);
                 sunmiPrinterService.printText("TIME IN: ", null);
-                sunmiPrinterService.printText(dateStr + "\n\n", null);
+                sunmiPrinterService.printText(dateStr + "\n", null);
                 sunmiPrinterService.printText("TIME OUT: ", null);
-                sunmiPrinterService.printText(dateToStr + "\n\n", null);
+                sunmiPrinterService.printText(dateToStr + "\n", null);
 
                 sunmiPrinterService.setFontSize(40f, null);
                 sunmiPrinterService.setAlignment(1, null);
                 sunmiPrinterService.printText("\n", null);
                 sunmiPrinterService.printText(ticketModel.getTotalPrice() == null? "" : HelperUtil.INSTANCE.formatDollaAmount(ticketModel.getTotalPrice()), null );
-                sunmiPrinterService.printText("\n\n", null);
+                sunmiPrinterService.printText("\n", null);
             }
             sunmiPrinterService.lineWrap(5, null);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+
+        }
+    }
+
+    public void printTicket(TicketModel ticketModel){
+        if(sunmiPrinterService == null){
+            //TODO Service disconnection processing
+            return;
+        }
+        try {
+            sunmiPrinterService.setAlignment(1, null);
+
+            sunmiPrinterService.setFontSize(40f, null);
+            sunmiPrinterService.printText("Parking Ticket\n", null);
+
+            sunmiPrinterService.setFontSize(25f, null);
+            sunmiPrinterService.printText("********************\n", null);
+
+            sunmiPrinterService.setAlignment(0, null);
+
+            sunmiPrinterService.printText("NO: ", null);
+            sunmiPrinterService.printText(ticketModel.getTicketNo()== null ? "" : ticketModel.getTicketNo() + "\n", null);
+            sunmiPrinterService.printText("TIME IN: ", null);
+
+            String dateStr = ticketModel.getFromDate() != null ?
+                    HelperUtil.INSTANCE.formatDatFromDatetime(ticketModel.getFromDate(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd h:mm a") :
+                    HelperUtil.INSTANCE.formatDate(new Date());
+
+            sunmiPrinterService.printText(dateStr + "\n", null);
+
+            Gson gson = new Gson();
+            String ticketModelJson = (String) gson.toJson(ticketModel.getTicketNo() != null ? ticketModel.getTicketNo() : "");
+
+            sunmiPrinterService.setAlignment(1, null);
+            Bitmap bitmap = HelperUtil.INSTANCE.generateQRCode(ticketModelJson, 350, 350);
+            sunmiPrinterService.printBitmap(bitmap, null);
+
+            sunmiPrinterService.lineWrap(4, null);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
 

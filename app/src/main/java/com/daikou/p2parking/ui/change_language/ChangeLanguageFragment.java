@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.daikou.p2parking.R;
 import com.daikou.p2parking.helper.HelperUtil;
+import com.daikou.p2parking.utility.RedirectClass;
 
 import java.util.List;
 
@@ -85,7 +86,8 @@ public class ChangeLanguageFragment extends DialogFragment {
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             if (initListener != null) {
                 dismiss();
-                initListener.initCallBack();
+                // initListener.initCallBack();
+                RedirectClass.INSTANCE.gotoMainActivity(requireActivity());
             }
         }, 1500);
 

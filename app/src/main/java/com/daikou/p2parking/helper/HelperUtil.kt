@@ -35,7 +35,7 @@ object HelperUtil {
         return bitmap
     }
 
-    fun generateQRCode(json: String?, width : Int, height : Int) : Bitmap?{
+    fun generateQRCode(json: String?, width : Int, height : Int) : Bitmap? {
         val mWriter = MultiFormatWriter()
         var bitmap : Bitmap? = null
         try {
@@ -47,7 +47,7 @@ object HelperUtil {
         } catch (e: WriterException) {
             e.printStackTrace()
         }
-        return bitmap
+        return null
     }
 
 

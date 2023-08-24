@@ -18,7 +18,6 @@ import com.daikou.p2parking.base.BaseActivity
 import com.daikou.p2parking.base.BetterActivityResult
 import com.daikou.p2parking.base.Config
 import com.daikou.p2parking.data.model.HomeItemModel
-import com.daikou.p2parking.data.model.TicketModel
 import com.daikou.p2parking.databinding.ActivityMainBinding
 import com.daikou.p2parking.emunUtil.HomeScreenEnum
 import com.daikou.p2parking.emunUtil.TicketType
@@ -94,7 +93,7 @@ class MainActivity : BaseActivity() {
                 if (it.data != null) {
                     it.data.image = imgBase64
 
-                    SunmiPrintHelper.getInstance().printTicket(it.data, TicketType.CheckIn)
+                    SunmiPrintHelper.getInstance().printTicket(it.data)
                 }
             } else {
                 MessageUtils.showError(this, null, it.message)
@@ -236,14 +235,13 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private var  ticketModel: TicketModel? = null
 
     private fun submitCheckOut(jsonData : String) {
-        ticketModel = Config.GsonConverterHelper.getJsonObjectToGenericClass<TicketModel>(jsonData)
+        val ticketNo = Config.GsonConverterHelper.getJsonObjectToGenericClass<String>(jsonData)
 
         val requestBody = java.util.HashMap<String, Any>()
         requestBody["status"] = CheckoutDetailActivity.BY_PREVIEW
-        requestBody["ticket_no"] = ticketModel?.ticketNo ?: ""
+        requestBody["ticket_no"] = ticketNo
         lotTypeViewModel.submitCheckOut(requestBody)
     }
 
