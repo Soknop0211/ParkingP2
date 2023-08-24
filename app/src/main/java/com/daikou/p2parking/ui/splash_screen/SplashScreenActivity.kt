@@ -8,6 +8,8 @@ import com.daikou.p2parking.base.BaseActivity
 import com.daikou.p2parking.base.SimpleBaseActivity
 import com.daikou.p2parking.databinding.ActivitySplashScreenBinding
 import com.daikou.p2parking.helper.AuthHelper
+import com.daikou.p2parking.helper.HelperUtil
+import com.daikou.p2parking.model.Constants
 import com.daikou.p2parking.utility.RedirectClass
 
 @SuppressLint("CustomSplashScreen")
@@ -18,7 +20,15 @@ class SplashScreenActivity : SimpleBaseActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         initAction()
+
+
+        var lang: String = HelperUtil.getStringSharePreference(this, Constants.Auth.LANGUAGE)
+        if (lang == "") {
+            lang = "en"
+        }
+        HelperUtil.changeLanguage(this,  lang)
     }
 
     private fun initAction(){

@@ -100,6 +100,7 @@ class MainActivity : BaseActivity() {
             }
         }
 
+        // Logout
         binding.btnLogout.setOnClickListener { it ->
             it.isEnabled = false
             it.postDelayed({ it.isEnabled = true }, 500)
@@ -110,7 +111,15 @@ class MainActivity : BaseActivity() {
                 getString(R.string.confirm_to_sign_out)
             ) {
                 it.dismiss()
+                lotTypeViewModel.logout()
+            }
+        }
+
+        lotTypeViewModel.dataLoginLiveData.observe(this) { respondState ->
+            if (respondState.success) {
                 RedirectClass.gotoLoginActivity(this)
+            } else {
+                MessageUtils.showError(this, null, respondState.message)
             }
         }
     }

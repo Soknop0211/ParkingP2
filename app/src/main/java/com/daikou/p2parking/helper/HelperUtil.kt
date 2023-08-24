@@ -1,7 +1,9 @@
 package com.daikou.p2parking.helper
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
@@ -13,6 +15,7 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.daikou.p2parking.R
+import com.daikou.p2parking.model.Constants
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
@@ -99,6 +102,18 @@ object HelperUtil {
         editor.putString(key, value)
         editor.apply()
     }
+
+    //=============================================================================================
+    fun changeLanguage(context: Activity, language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        setStringSharePreference(context, Constants.Auth.LANGUAGE, language)
+        val res = context.resources
+        val config = Configuration(res.configuration)
+        config.locale = locale
+        res.updateConfiguration(config, res.displayMetrics)
+    }
+
 
     fun convert(bitmap: Bitmap): String? {
         val outputStream = ByteArrayOutputStream()

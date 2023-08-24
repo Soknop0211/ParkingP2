@@ -24,6 +24,11 @@ class Repository
         emit(respond)
     }
 
+    fun logout(): Flow<ApiResWraper<JsonElement>> = flow {
+        val respond = apiService.logout()
+        emit(respond)
+    }
+
     fun fetchLotType(): Flow<ApiResWraper<List<LotTypeModel>>> = flow {
         val respond = apiService.fetchLotType()
         emit(respond)

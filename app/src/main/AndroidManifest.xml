@@ -40,7 +40,8 @@
             android:theme="@style/Theme.MaterialComponents.Light.Dialog.Alert" />
         <activity
             android:name=".ui.login.LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.checkout.CheckoutDetailActivity"
             android:exported="false" />

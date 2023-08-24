@@ -36,5 +36,6 @@
     <string name="payment_success">Your payment success with cash payment.</string>
     <string name="scan_qr">Scan QR</string>
     <string name="eazy_parking">Eazy Parking</string>
+    <string name="select_language">Select Language</string>
 
 </resources>

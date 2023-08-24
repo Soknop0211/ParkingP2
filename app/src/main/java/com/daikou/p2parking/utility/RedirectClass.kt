@@ -31,6 +31,7 @@ object RedirectClass : BaseActivity() {
     fun gotoLoginActivity(activity: Activity) {
         clearSession(activity)
         val intent = Intent(activity, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         gotoActivity(activity, intent)
         activity.finishAffinity()
     }

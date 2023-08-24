@@ -8,7 +8,9 @@ import android.os.Looper
 import android.util.Log
 import androidx.activity.result.ActivityResult
 import com.daikou.p2parking.helper.AuthHelper
+import com.daikou.p2parking.helper.HelperUtil
 import com.daikou.p2parking.helper.SunmiPrintHelper
+import com.daikou.p2parking.model.Constants
 
 open class BaseActivity : BaseCoreActivity() {
 
@@ -16,8 +18,16 @@ open class BaseActivity : BaseCoreActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         handler = Handler(Looper.getMainLooper())
+
         initPrinter()
+
+        var lang: String = HelperUtil.getStringSharePreference(this, Constants.Auth.LANGUAGE)
+        if (lang == "") {
+            lang = "en"
+        }
+        HelperUtil.changeLanguage(this, lang)
     }
 
     private fun initPrinter(){

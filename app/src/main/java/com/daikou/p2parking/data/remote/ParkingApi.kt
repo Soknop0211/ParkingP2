@@ -12,6 +12,9 @@ interface ParkingApi {
     @POST("api/auth/login")
     suspend fun login(@Body map: HashMap<String, Any>): ApiResWraper<JsonElement>
 
+    @POST("api/auth/logout")
+    suspend fun logout(): ApiResWraper<JsonElement>
+
     //lot type
     @GET("api/p2/fetch_lot_types")
     suspend fun fetchLotType(): ApiResWraper<List<LotTypeModel>>

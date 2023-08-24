@@ -119,4 +119,38 @@ class LotTypeViewModel @Inject constructor(
 
     }
 
+    /*** Log Out **/
+    private val _dataLoginLiveData = MutableLiveData<ApiResWraper<JsonElement>>()
+
+    val dataLoginLiveData: MutableLiveData<ApiResWraper<JsonElement>> get() = _dataLoginLiveData
+
+    fun logout() {
+        val requestFlow: Flow<ApiResWraper<JsonElement>> = repository.logout()
+        submit(requestFlow, object : IApiResWrapper<ApiResWraper<JsonElement>> {
+            override fun onLoading(hasLoading: Boolean) {
+                loadingLoginLiveData.value = hasLoading
+            }
+
+            override fun onData(respondData: ApiResWraper<JsonElement>) {
+                if (respondData.success) {
+                    dataLoginLiveData.value = respondData
+                }
+            }
+
+            override fun onError(
+                message: String,
+                code: Int,
+                errorHashMap: JsonObject,
+            ) {
+                dataLoginLiveData.value = ApiResWraper(
+                    code,
+                    message,
+                    false,
+                    errorHashMap,
+                )
+            }
+
+        })
+    }
+
 }
