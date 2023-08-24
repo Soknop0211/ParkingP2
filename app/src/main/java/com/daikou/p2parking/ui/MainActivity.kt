@@ -3,11 +3,14 @@ package com.daikou.p2parking.ui
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.view.WindowManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.daikou.p2parking.R
 import com.daikou.p2parking.apdapter.HomeItemAdapter
@@ -21,13 +24,12 @@ import com.daikou.p2parking.emunUtil.HomeScreenEnum
 import com.daikou.p2parking.emunUtil.TicketType
 import com.daikou.p2parking.helper.*
 import com.daikou.p2parking.model.LotTypeModel
+import com.daikou.p2parking.ui.change_language.ChangeLanguageFragment
 import com.daikou.p2parking.ui.checkout.CheckoutDetailActivity
 import com.daikou.p2parking.ui.scan_check_out.CaptureScanActivity
 import com.daikou.p2parking.utility.RedirectClass
 import com.daikou.p2parking.view_model.LotTypeViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.google.zxing.client.android.Intents
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
@@ -49,6 +51,11 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /**** window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR ***/
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -57,6 +64,9 @@ class MainActivity : BaseActivity() {
         setupHomeItem()
 
         observableField()
+
+        initAction()
+
     }
 
     private fun observableField() {
@@ -101,6 +111,17 @@ class MainActivity : BaseActivity() {
         }
 
         // Logout
+        lotTypeViewModel.dataLoginLiveData.observe(this) { respondState ->
+            if (respondState.success) {
+                RedirectClass.gotoLoginActivity(this)
+            } else {
+                MessageUtils.showError(this, null, respondState.message)
+            }
+        }
+    }
+
+    private fun initAction() {
+        // Logout
         binding.btnLogout.setOnClickListener { it ->
             it.isEnabled = false
             it.postDelayed({ it.isEnabled = true }, 500)
@@ -115,16 +136,32 @@ class MainActivity : BaseActivity() {
             }
         }
 
-        lotTypeViewModel.dataLoginLiveData.observe(this) { respondState ->
-            if (respondState.success) {
-                RedirectClass.gotoLoginActivity(this)
-            } else {
-                MessageUtils.showError(this, null, respondState.message)
+        binding.iconLang.setOnClickListener(
+            CustomSetOnClickViewListener{
+                val changeLanguageAlert = ChangeLanguageFragment()
+                changeLanguageAlert.setInitListener {
+                    recreate()
+                }
+                changeLanguageAlert.show(supportFragmentManager, changeLanguageAlert.javaClass.simpleName)
+            }
+        )
+
+        // Change language
+
+        when (mLanguage ?: "en") {
+            Config.LANG_EN, "" -> {
+                binding.iconLang.setImageResource(R.drawable.united_kingdom_flag)
+            }
+            Config.LANG_KH -> {
+                binding.iconLang.setImageResource(R.drawable.cambodia_flag)
+            }
+            else -> {
+                binding.iconLang.setImageResource(R.drawable.united_kingdom_flag)
             }
         }
     }
 
-    private fun gotoLotTypeScreen(jsonData: String,) {
+    private fun gotoLotTypeScreen(jsonData: String) {
         RedirectClass.gotoLotTypeActivity(this, jsonData,
             object : BetterActivityResult.OnActivityResult<ActivityResult> {
                 override fun onActivityResult(result: ActivityResult) {

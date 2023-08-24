@@ -6,13 +6,13 @@
     <string name="ticket_no">Ticket No:</string>
     <string name="time_out">Time out:</string>
     <string name="time_in">Time in:</string>
-    <string name="time_use">Time use:</string>
+    <string name="time_use">Time used:</string>
     <string name="submit">Submit</string>
     <string name="submit_print">Submit/Print</string>
     <string name="back">Back</string>
     <string name="check_out_detail">Checkout Detail</string>
     <string name="select_payment_method">Select Payment Method</string>
-    <string name="pay_by_case">Pay By Case</string>
+    <string name="pay_by_case">Pay By Cash</string>
     <string name="online_pay">Online Pay</string>
     <string name="enter_password">Enter Password</string>
     <string name="log_in">Login</string>
@@ -37,5 +37,9 @@
     <string name="scan_qr">Scan QR</string>
     <string name="eazy_parking">Eazy Parking</string>
     <string name="select_language">Select Language</string>
+    <string name="khmer">Khmer</string>
+    <string name="english">English</string>
+    <string name="cancel">Cancel</string>
+    <string name="home">Home</string>
 
 </resources>

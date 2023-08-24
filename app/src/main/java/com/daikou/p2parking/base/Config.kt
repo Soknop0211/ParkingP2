@@ -6,7 +6,8 @@ object Config {
     const val BASE_URL = "https://parkingdev.daikou.asia/"
     const val APP_TYPE = "parking_customer"
     const val LANGUAGE = "en"
-
+    const val LANG_KH = "kh"
+    const val LANG_EN = "en"
     object GsonConverterHelper {
 
         fun <T> convertGenericClassToJson(

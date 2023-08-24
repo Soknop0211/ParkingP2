@@ -15,7 +15,7 @@ import com.daikou.p2parking.model.Constants
 open class BaseActivity : BaseCoreActivity() {
 
     private lateinit var handler : Handler
-
+    var mLanguage : String ?= null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,11 +23,11 @@ open class BaseActivity : BaseCoreActivity() {
 
         initPrinter()
 
-        var lang: String = HelperUtil.getStringSharePreference(this, Constants.Auth.LANGUAGE)
-        if (lang == "") {
-            lang = "en"
+        mLanguage= HelperUtil.getStringSharePreference(this, Constants.Auth.LANGUAGE)
+        if (mLanguage == "") {
+            mLanguage = "en"
         }
-        HelperUtil.changeLanguage(this, lang)
+        HelperUtil.changeLanguage(this, mLanguage ?: "en")
     }
 
     private fun initPrinter(){

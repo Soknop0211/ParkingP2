@@ -5,7 +5,6 @@ import com.daikou.p2parking.EazyTaxiApplication
 import com.daikou.p2parking.base.Config
 import com.daikou.p2parking.base.Config.LANGUAGE
 import com.daikou.p2parking.helper.AuthHelper
-import com.daikou.p2parking.model.Constants
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
