@@ -3,14 +3,11 @@ package com.daikou.p2parking.ui
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.view.WindowManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.daikou.p2parking.R
 import com.daikou.p2parking.apdapter.HomeItemAdapter
@@ -20,7 +17,6 @@ import com.daikou.p2parking.base.Config
 import com.daikou.p2parking.data.model.HomeItemModel
 import com.daikou.p2parking.databinding.ActivityMainBinding
 import com.daikou.p2parking.emunUtil.HomeScreenEnum
-import com.daikou.p2parking.emunUtil.TicketType
 import com.daikou.p2parking.helper.*
 import com.daikou.p2parking.model.LotTypeModel
 import com.daikou.p2parking.ui.change_language.ChangeLanguageFragment
@@ -236,12 +232,10 @@ class MainActivity : BaseActivity() {
     }
 
 
-    private fun submitCheckOut(jsonData : String) {
-        val ticketNo = Config.GsonConverterHelper.getJsonObjectToGenericClass<String>(jsonData)
-
+    private fun submitCheckOut(jsonData: String) {
         val requestBody = java.util.HashMap<String, Any>()
         requestBody["status"] = CheckoutDetailActivity.BY_PREVIEW
-        requestBody["ticket_no"] = ticketNo
+        requestBody["ticket_no"] = jsonData
         lotTypeViewModel.submitCheckOut(requestBody)
     }
 

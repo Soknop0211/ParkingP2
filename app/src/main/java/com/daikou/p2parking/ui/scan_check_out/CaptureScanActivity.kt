@@ -10,7 +10,7 @@ import com.daikou.p2parking.R
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 
-class CaptureScanActivity : Activity (){
+class CaptureScanActivity : Activity (), DecoratedBarcodeView.TorchListener {
 
     private var capture: CaptureManager? = null
     private var barcodeScannerView: DecoratedBarcodeView? = null
@@ -23,6 +23,16 @@ class CaptureScanActivity : Activity (){
         capture!!.decode()
 
         initAction()
+
+    }
+
+    // TorchListener callback methods
+    override fun onTorchOn() {
+        // Flash is turned on
+    }
+
+    override fun onTorchOff() {
+        // Flash is turned off
     }
 
 
@@ -30,6 +40,22 @@ class CaptureScanActivity : Activity (){
         val imageView = findViewById<ImageView>(R.id.iconBack)
         imageView.visibility = View.VISIBLE
         imageView.setOnClickListener { finish() }
+
+        barcodeScannerView?.setTorchListener(this)
+
+        var isFlashOn = true
+        val imgFlash = findViewById<ImageView>(R.id.btnOnOffLight)
+        imgFlash.setOnClickListener {
+            if (isFlashOn) {
+                isFlashOn = false
+                barcodeScannerView?.setTorchOn()
+                imgFlash.setImageResource(R.drawable.baseline_flash_on_24)
+            } else {
+                isFlashOn = true
+                barcodeScannerView?.setTorchOff()
+                imgFlash.setImageResource(R.drawable.baseline_flash_off_24)
+            }
+        }
     }
 
     private fun initializeContent(): DecoratedBarcodeView {
