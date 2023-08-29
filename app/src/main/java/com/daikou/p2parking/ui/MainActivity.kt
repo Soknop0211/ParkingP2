@@ -1,13 +1,19 @@
 package com.daikou.p2parking.ui
 
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.SparseArray
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
+import androidx.core.util.forEach
 import androidx.recyclerview.widget.GridLayoutManager
 import com.daikou.p2parking.R
 import com.daikou.p2parking.apdapter.HomeItemAdapter
@@ -18,6 +24,7 @@ import com.daikou.p2parking.data.model.HomeItemModel
 import com.daikou.p2parking.databinding.ActivityMainBinding
 import com.daikou.p2parking.emunUtil.HomeScreenEnum
 import com.daikou.p2parking.helper.*
+import com.daikou.p2parking.model.Constants
 import com.daikou.p2parking.model.LotTypeModel
 import com.daikou.p2parking.ui.change_language.ChangeLanguageFragment
 import com.daikou.p2parking.ui.checkout.CheckoutDetailActivity
@@ -25,11 +32,13 @@ import com.daikou.p2parking.ui.scan_check_out.CaptureScanActivity
 import com.daikou.p2parking.utility.RedirectClass
 import com.daikou.p2parking.view_model.LotTypeViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.gms.vision.Frame
+import com.google.android.gms.vision.text.TextBlock
+import com.google.android.gms.vision.text.TextRecognizer
 import com.google.zxing.client.android.Intents
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
-
 
 class MainActivity : BaseActivity() {
 
@@ -42,6 +51,17 @@ class MainActivity : BaseActivity() {
 
     private val lotTypeViewModel: LotTypeViewModel by viewModels {
         factory
+    }
+    private val intentFilter = IntentFilter()
+
+    private var isFromSearch = false
+    private var mSearchTicketFragment : SearchTicketFragment ? = null
+    companion object {
+        const val VALUE = "VALUE"
+    }
+
+    init {
+        intentFilter.addAction(Constants.Auth.customBroadcastKey)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,12 +84,33 @@ class MainActivity : BaseActivity() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        registerReceiver(myBroadcastReceiver, intentFilter)
+    }
+
+    override fun onDestroy() {
+        unregisterReceiver(myBroadcastReceiver)
+        super.onDestroy()
+    }
+
+    private val myBroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(mContext: Context?, mIntent: Intent?) {
+            if (mIntent != null && mIntent.hasExtra(VALUE)) {
+                val mValue = mIntent.getStringExtra(VALUE)
+                if (mValue != null) {
+                    submitCheckOut(mValue)
+                }
+            }
+        }
+    }
+
     private fun observableField() {
 
         lotTypeViewModel.loadingLoginLiveData.observe(self()) {
             binding.loadingView.root.visibility = if (it) View.VISIBLE else View.GONE
         }
-
 
         // Lot Type
         lotTypeViewModel.dataListAllLotLiveDataLiveData.observe(self()) {
@@ -99,9 +140,18 @@ class MainActivity : BaseActivity() {
         // Preview
         lotTypeViewModel.submitCheckOutMutableLiveData.observe(this) { respondState ->
             if (respondState.success) {
+                if (isFromSearch && mSearchTicketFragment != null) {
+                    isFromSearch = false
+                    mSearchTicketFragment?.initDismiss()
+                }
+
                 RedirectClass.gotoCheckoutActivity(this, Config.GsonConverterHelper.convertGenericClassToJson(respondState.data))
             } else {
                 MessageUtils.showError(this, null, respondState.message)
+                if (isFromSearch && mSearchTicketFragment != null) {
+                    isFromSearch = false
+                    mSearchTicketFragment?.initDismissProgress()
+                }
             }
         }
 
@@ -134,15 +184,11 @@ class MainActivity : BaseActivity() {
         binding.iconLang.setOnClickListener(
             CustomSetOnClickViewListener{
                 val changeLanguageAlert = ChangeLanguageFragment()
-                changeLanguageAlert.setInitListener {
-                    recreate()
-                }
                 changeLanguageAlert.show(supportFragmentManager, changeLanguageAlert.javaClass.simpleName)
             }
         )
 
         // Change language
-
         when (mLanguage ?: "en") {
             Config.LANG_EN, "" -> {
                 binding.iconLang.setImageResource(R.drawable.united_kingdom_flag)
@@ -154,6 +200,18 @@ class MainActivity : BaseActivity() {
                 binding.iconLang.setImageResource(R.drawable.united_kingdom_flag)
             }
         }
+
+        binding.iconSearch.setOnClickListener (CustomSetOnClickViewListener {
+            mSearchTicketFragment = SearchTicketFragment()
+            mSearchTicketFragment?.setInitListener(object : SearchTicketFragment.InitListener {
+                override fun initCallBack(result: String) {
+                    isFromSearch = true
+                    submitCheckOut(result)
+                }
+
+            })
+            mSearchTicketFragment?.show(supportFragmentManager, mSearchTicketFragment?.javaClass?.simpleName)
+        })
     }
 
     private fun gotoLotTypeScreen(jsonData: String) {
@@ -270,7 +328,31 @@ class MainActivity : BaseActivity() {
                         )
                     }
 
-                    lotTypeViewModel.submitChecking(requestBody)
+                    // lotTypeViewModel.submitChecking(requestBody)
+
+                    // Assuming you have the captured photo as a Bitmap
+
+                    val textRecognizer = TextRecognizer.Builder(applicationContext).build()
+                    if (textRecognizer.isOperational) {
+                        val frame = Frame.Builder().setBitmap(bitmap).build()
+                        val textBlocks: SparseArray<TextBlock> = textRecognizer.detect(frame)
+
+                        val stringBuilder = StringBuilder()
+
+                        for (i in 0 until textBlocks.size()) {
+                            val textBlock = textBlocks.valueAt(i)
+                            stringBuilder.append(textBlock.value)
+                            stringBuilder.append("\n")
+                        }
+
+                        val licensePlateNumber = stringBuilder.toString().trim()
+                        processLicensePlateNumber(licensePlateNumber)
+                    } else {
+                        // Handle case when TextRecognizer is not available or not operational
+                    }
+
+                    val txtString = getPlateNumberFromImage(bitmap)
+                    AppLOGG.d("jeeeeeeeeeeeeeeeeee", txtString)
                 }
             }
         }
@@ -289,5 +371,31 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+    private fun processLicensePlateNumber(licensePlateNumber: String) {
+        // Perform actions with the license plate number
+        if (licensePlateNumber.isNotEmpty()) {
+            // Display the license plate number in a TextView
+
+            // Save the license plate number to a database or perform further processing
+            AppLOGG.d("PlatNumberLog", "Plate $licensePlateNumber")
+        } else {
+            // Handle case when no license plate number is detected
+            AppLOGG.d("PlatNumberLog", "No license plate number detected")
+        }
+    }
+    private fun getPlateNumberFromImage(bitmap: Bitmap) : String{
+        val textRecognizer = TextRecognizer.Builder(self()).build()
+        val resizedBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.width, 100, true)
+        val frame = Frame.Builder().setBitmap(bitmap).build()
+        val sparseTexts = textRecognizer.detect(frame) // get text
+        val buffer = StringBuffer()
+        sparseTexts.forEach { text, _ ->
+            val textBlock = sparseTexts[text]
+            val textStr = textBlock.value
+            buffer.append(textStr)
+        }
+        return buffer.toString()
     }
 }

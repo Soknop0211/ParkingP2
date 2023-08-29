@@ -1,14 +1,23 @@
 package com.daikou.p2parking.ui.scan_check_out
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
 import android.view.KeyEvent
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.daikou.p2parking.R
+import com.daikou.p2parking.base.base.BaseEdittextListener
+import com.daikou.p2parking.databinding.FragmentSearchTicketBinding
+import com.daikou.p2parking.helper.CustomSetOnClickViewListener
+import com.daikou.p2parking.helper.HelperUtil
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
+
 
 class CaptureScanActivity : Activity (), DecoratedBarcodeView.TorchListener {
 
@@ -56,6 +65,48 @@ class CaptureScanActivity : Activity (), DecoratedBarcodeView.TorchListener {
                 imgFlash.setImageResource(R.drawable.baseline_flash_off_24)
             }
         }
+
+        val iconSearch = findViewById<ImageView>(R.id.iconSearch)
+        imageView.visibility = View.GONE
+        iconSearch.setOnClickListener (CustomSetOnClickViewListener {
+            capture!!.onPause()
+            showDialog(this)
+        })
+
+    }
+
+    private fun showDialog(context : Context) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+
+        val inflater = LayoutInflater.from(context)
+        val binding = FragmentSearchTicketBinding.inflate(inflater)
+        builder.setView(binding.root)
+
+        val dialog: AlertDialog = builder.create()
+        dialog.setCancelable(false)
+
+        binding.txtCancel.setOnClickListener {
+            capture!!.onResume()
+            dialog.dismiss()
+        }
+        binding.txtOk.setOnClickListener {
+            HelperUtil.startBroadcastData(binding.ticketNoEdt.text.toString(), this)
+        }
+
+        binding.ticketNoEdt.addTextChangedListener(object : BaseEdittextListener() {
+            override fun afterTextChangedNotEmpty(editable: Editable) {
+                binding.txtOk.isEnabled = true
+                binding.txtOk.backgroundTintList = ContextCompat.getColorStateList(context, R.color.colorPrimary)
+            }
+
+            override fun afterTextChangedIsEmpty() {
+                binding.txtOk.isEnabled = false
+                binding.txtOk.backgroundTintList = ContextCompat.getColorStateList(context, R.color.light_gray)
+            }
+
+        })
+
+        dialog.show()
     }
 
     private fun initializeContent(): DecoratedBarcodeView {

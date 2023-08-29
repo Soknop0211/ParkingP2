@@ -1,10 +1,13 @@
 package com.daikou.p2parking.model
 
+import com.daikou.p2parking.BuildConfig
+
 object Constants {
     object  Auth{
         const val TOKEN_KEY = "token_key"
         const val USER_KEY = "user_key"
         const val LANGUAGE = "language"
+        const val customBroadcastKey: String = BuildConfig.APPLICATION_ID + ".broadcast.activity.CUSTOM_CHT_BROADCAST"
     }
 
     object PhoneConfig {

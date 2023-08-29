@@ -3,12 +3,15 @@ package com.daikou.p2parking.helper
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.Base64
 import android.widget.ImageView
@@ -16,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.daikou.p2parking.R
 import com.daikou.p2parking.model.Constants
+import com.daikou.p2parking.ui.MainActivity
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
@@ -134,6 +138,16 @@ object HelperUtil {
             width = (height * bitmapRatio).toInt()
         }
         return Bitmap.createScaledBitmap(image, width, height, true)
+    }
+
+    fun startBroadcastData(mValue: String, mActivity : Activity) {
+        Looper.myLooper()?.let {
+            Handler(it).postDelayed({
+                val intent = Intent(Constants.Auth.customBroadcastKey)
+                intent.putExtra(MainActivity.VALUE, mValue)
+                mActivity.sendBroadcast(intent)
+            }, 500)
+        }
     }
 
 }
