@@ -1,10 +1,7 @@
 package com.daikou.p2parking.ui
 
 import android.app.Activity
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -24,7 +21,6 @@ import com.daikou.p2parking.data.model.HomeItemModel
 import com.daikou.p2parking.databinding.ActivityMainBinding
 import com.daikou.p2parking.emunUtil.HomeScreenEnum
 import com.daikou.p2parking.helper.*
-import com.daikou.p2parking.model.Constants
 import com.daikou.p2parking.model.LotTypeModel
 import com.daikou.p2parking.ui.change_language.ChangeLanguageFragment
 import com.daikou.p2parking.ui.checkout.CheckoutDetailActivity
@@ -52,17 +48,9 @@ class MainActivity : BaseActivity() {
     private val lotTypeViewModel: LotTypeViewModel by viewModels {
         factory
     }
-    private val intentFilter = IntentFilter()
 
     private var isFromSearch = false
     private var mSearchTicketFragment : SearchTicketFragment ? = null
-    companion object {
-        const val VALUE = "VALUE"
-    }
-
-    init {
-        intentFilter.addAction(Constants.Auth.customBroadcastKey)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,28 +70,6 @@ class MainActivity : BaseActivity() {
 
         initAction()
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        registerReceiver(myBroadcastReceiver, intentFilter)
-    }
-
-    override fun onDestroy() {
-        unregisterReceiver(myBroadcastReceiver)
-        super.onDestroy()
-    }
-
-    private val myBroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(mContext: Context?, mIntent: Intent?) {
-            if (mIntent != null && mIntent.hasExtra(VALUE)) {
-                val mValue = mIntent.getStringExtra(VALUE)
-                if (mValue != null) {
-                    submitCheckOut(mValue)
-                }
-            }
-        }
     }
 
     private fun observableField() {
@@ -385,7 +351,7 @@ class MainActivity : BaseActivity() {
             AppLOGG.d("PlatNumberLog", "No license plate number detected")
         }
     }
-    private fun getPlateNumberFromImage(bitmap: Bitmap) : String{
+    private fun getPlateNumberFromImage(bitmap: Bitmap) : String {
         val textRecognizer = TextRecognizer.Builder(self()).build()
         val resizedBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.width, 100, true)
         val frame = Frame.Builder().setBitmap(bitmap).build()
@@ -398,4 +364,6 @@ class MainActivity : BaseActivity() {
         }
         return buffer.toString()
     }
+
+
 }

@@ -42,8 +42,8 @@
     <string name="cancel">Cancel</string>
     <string name="home">Home</string>
     <string name="eazy_partner_solution_co_ltd">EAZY Partner Solution Co., Ltd</string>
-    <string name="search_ticket_no">Search Ticket No</string>
+    <string name="search_ticket_no">Search</string>
     <string name="enter_ticket_no">Enter ticket no</string>
-    <string name="please_enter_ticket_no_that_have_in_ticket_to_preview_check_out">Please enter ticket no that have in ticket to preview check out.</string>
+    <string name="please_enter_ticket_no_that_have_in_ticket_to_preview_check_out">Please enter ticket no that have in ticket to preview to check out detail.</string>
 
 </resources>

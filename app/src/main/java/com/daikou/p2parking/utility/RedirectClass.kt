@@ -17,7 +17,7 @@ object RedirectClass : BaseActivity() {
 
     fun gotoMainActivity(activity: Activity){
         val intent = Intent(activity, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        // intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         gotoActivity(activity, intent)
         activity.finishAffinity()
     }

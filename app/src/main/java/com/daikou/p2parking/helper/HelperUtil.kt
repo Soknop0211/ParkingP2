@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.daikou.p2parking.R
 import com.daikou.p2parking.model.Constants
+import com.daikou.p2parking.model.Constants.Auth.customBroadcastKey
 import com.daikou.p2parking.ui.MainActivity
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -143,8 +144,8 @@ object HelperUtil {
     fun startBroadcastData(mValue: String, mActivity : Activity) {
         Looper.myLooper()?.let {
             Handler(it).postDelayed({
-                val intent = Intent(Constants.Auth.customBroadcastKey)
-                intent.putExtra(MainActivity.VALUE, mValue)
+                val intent = Intent(customBroadcastKey)
+                intent.putExtra(customBroadcastKey, mValue)
                 mActivity.sendBroadcast(intent)
             }, 500)
         }

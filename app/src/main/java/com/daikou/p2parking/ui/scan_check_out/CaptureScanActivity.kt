@@ -13,8 +13,6 @@ import androidx.core.content.ContextCompat
 import com.daikou.p2parking.R
 import com.daikou.p2parking.base.base.BaseEdittextListener
 import com.daikou.p2parking.databinding.FragmentSearchTicketBinding
-import com.daikou.p2parking.helper.CustomSetOnClickViewListener
-import com.daikou.p2parking.helper.HelperUtil
 import com.journeyapps.barcodescanner.CaptureManager
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 
@@ -66,13 +64,6 @@ class CaptureScanActivity : Activity (), DecoratedBarcodeView.TorchListener {
             }
         }
 
-        val iconSearch = findViewById<ImageView>(R.id.iconSearch)
-        imageView.visibility = View.GONE
-        iconSearch.setOnClickListener (CustomSetOnClickViewListener {
-            capture!!.onPause()
-            showDialog(this)
-        })
-
     }
 
     private fun showDialog(context : Context) {
@@ -83,14 +74,10 @@ class CaptureScanActivity : Activity (), DecoratedBarcodeView.TorchListener {
         builder.setView(binding.root)
 
         val dialog: AlertDialog = builder.create()
-        dialog.setCancelable(false)
 
-        binding.txtCancel.setOnClickListener {
-            capture!!.onResume()
-            dialog.dismiss()
-        }
+        binding.txtCancel.setOnClickListener { dialog.dismiss() }
         binding.txtOk.setOnClickListener {
-            HelperUtil.startBroadcastData(binding.ticketNoEdt.text.toString(), this)
+            dialog.dismiss()
         }
 
         binding.ticketNoEdt.addTextChangedListener(object : BaseEdittextListener() {

@@ -20,11 +20,6 @@ class SearchTicketFragment : DialogFragment() {
     private var initListener: InitListener? = null
     private var binding: FragmentSearchTicketBinding? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        isCancelable = false
-    }
-
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSearchTicketBinding.inflate(inflater, container, false)

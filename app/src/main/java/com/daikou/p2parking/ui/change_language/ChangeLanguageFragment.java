@@ -10,10 +10,8 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ProgressBar;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,7 +24,6 @@ import java.util.List;
 
 public class ChangeLanguageFragment extends DialogFragment {
 
-    private InitListener initListener;
     private ProgressBar progressBar;
 
     @Override
@@ -84,22 +81,10 @@ public class ChangeLanguageFragment extends DialogFragment {
         progressBar.setVisibility(View.VISIBLE);
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            if (initListener != null) {
-                dismiss();
-                // initListener.initCallBack();
-                RedirectClass.INSTANCE.gotoMainActivity(requireActivity());
-            }
+            dismiss();
+            RedirectClass.INSTANCE.gotoMainActivity(requireActivity());
         }, 1500);
 
     };
-
-    public void setInitListener(InitListener initListener) {
-        this.initListener = initListener;
-    }
-
-    public interface InitListener {
-        void initCallBack();
-    }
-
 
 }
