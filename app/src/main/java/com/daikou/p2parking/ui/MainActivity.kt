@@ -7,9 +7,12 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.view.WindowManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.core.util.forEach
+import androidx.core.view.WindowCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.daikou.p2parking.R
 import com.daikou.p2parking.apdapter.HomeItemAdapter
@@ -53,9 +56,11 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        /**** window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR ***/
+        /** window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+            WindowCompat.getInsetsController(window, window.decorView).apply {
+                isAppearanceLightStatusBars = true
+            } ***/
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
