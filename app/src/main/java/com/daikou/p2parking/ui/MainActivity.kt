@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.SparseArray
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
@@ -29,7 +28,6 @@ import com.daikou.p2parking.utility.RedirectClass
 import com.daikou.p2parking.view_model.LotTypeViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.vision.Frame
-import com.google.android.gms.vision.text.TextBlock
 import com.google.android.gms.vision.text.TextRecognizer
 import com.google.zxing.client.android.Intents
 import com.journeyapps.barcodescanner.ScanContract
@@ -63,8 +61,6 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
         initPrinterService()
-
-        setupHomeItem()
 
         observableField()
 
@@ -178,6 +174,9 @@ class MainActivity : BaseActivity() {
             })
             mSearchTicketFragment?.show(supportFragmentManager, mSearchTicketFragment?.javaClass?.simpleName)
         })
+
+        // Set up data
+        setupHomeItem()
     }
 
     private fun gotoLotTypeScreen(jsonData: String) {
@@ -248,7 +247,6 @@ class MainActivity : BaseActivity() {
                 AppLOGG.d("Cancelled", "Cancelled Scan")
             } else if (originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
                 MessageUtils.showError(this, null, "Cancelled due to missing camera permission.")
-
             }
         } else {
             submitCheckOut(result.contents)
@@ -294,31 +292,7 @@ class MainActivity : BaseActivity() {
                         )
                     }
 
-                    // lotTypeViewModel.submitChecking(requestBody)
-
-                    // Assuming you have the captured photo as a Bitmap
-
-                    val textRecognizer = TextRecognizer.Builder(applicationContext).build()
-                    if (textRecognizer.isOperational) {
-                        val frame = Frame.Builder().setBitmap(bitmap).build()
-                        val textBlocks: SparseArray<TextBlock> = textRecognizer.detect(frame)
-
-                        val stringBuilder = StringBuilder()
-
-                        for (i in 0 until textBlocks.size()) {
-                            val textBlock = textBlocks.valueAt(i)
-                            stringBuilder.append(textBlock.value)
-                            stringBuilder.append("\n")
-                        }
-
-                        val licensePlateNumber = stringBuilder.toString().trim()
-                        processLicensePlateNumber(licensePlateNumber)
-                    } else {
-                        // Handle case when TextRecognizer is not available or not operational
-                    }
-
-                    val txtString = getPlateNumberFromImage(bitmap)
-                    AppLOGG.d("jeeeeeeeeeeeeeeeeee", txtString)
+                    lotTypeViewModel.submitChecking(requestBody)
                 }
             }
         }
@@ -339,18 +313,6 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun processLicensePlateNumber(licensePlateNumber: String) {
-        // Perform actions with the license plate number
-        if (licensePlateNumber.isNotEmpty()) {
-            // Display the license plate number in a TextView
-
-            // Save the license plate number to a database or perform further processing
-            AppLOGG.d("PlatNumberLog", "Plate $licensePlateNumber")
-        } else {
-            // Handle case when no license plate number is detected
-            AppLOGG.d("PlatNumberLog", "No license plate number detected")
-        }
-    }
     private fun getPlateNumberFromImage(bitmap: Bitmap) : String {
         val textRecognizer = TextRecognizer.Builder(self()).build()
         val resizedBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.width, 100, true)

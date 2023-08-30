@@ -24,6 +24,10 @@ class SearchTicketFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSearchTicketBinding.inflate(inflater, container, false)
 
+        if (dialog != null) {
+            dialog?.setCanceledOnTouchOutside(false)
+        }
+
         binding?.txtCancel?.setOnClickListener { dismiss() }
         binding?.txtOk?.setOnClickListener {
             if (initListener != null) {
