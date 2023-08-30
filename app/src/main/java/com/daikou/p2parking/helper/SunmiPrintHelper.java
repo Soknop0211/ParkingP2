@@ -218,7 +218,7 @@ public class SunmiPrintHelper {
             sunmiPrinterService.printText(dateStr + "\n", null);
 
             Gson gson = new Gson();
-            String ticketModelJson = (String) gson.toJson(ticketModel.getTicketNo() != null ? ticketModel.getTicketNo() : "");
+            String ticketModelJson = ticketModel.getTicketNo() != null ? ticketModel.getTicketNo() : "";
 
             sunmiPrinterService.setAlignment(1, null);
             Bitmap bitmap = HelperUtil.INSTANCE.generateQRCode(ticketModelJson, 350, 350);
