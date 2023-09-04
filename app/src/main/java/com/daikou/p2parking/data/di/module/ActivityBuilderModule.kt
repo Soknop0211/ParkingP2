@@ -1,5 +1,6 @@
 package com.daikou.p2parking.data.di.module
 
+import com.daikou.p2parking.WebPayActivity
 import com.daikou.p2parking.base.BaseActivity
 import com.daikou.p2parking.base.BaseCoreActivity
 import com.daikou.p2parking.base.SimpleBaseActivity
@@ -42,4 +43,7 @@ abstract class ActivityBuilderModule {
 
     @ContributesAndroidInjector
     abstract fun doPaymentActivity(): DoPaymentActivity
+
+    @ContributesAndroidInjector
+    abstract fun webPayActivity(): WebPayActivity
 }

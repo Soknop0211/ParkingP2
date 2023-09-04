@@ -33,7 +33,7 @@
     <string name="confirm_to_sign_out">តើអ្នកចង់ចេញពីគណនីទេ?</string>
     <string name="no">ទេ</string>
     <string name="yes_f">បាទ</string>
-    <string name="payment_success">ការទូទាត់របស់អ្នកជោគជ័យជាមួយនឹងការទូទាត់ជាសាច់ប្រាក់។</string>
+    <string name="payment_success">ការទូទាត់របស់អ្នកជោគជ័យ។</string>
     <string name="scan_qr">ស្គេន QR</string>
     <string name="eazy_parking">Eazy Parking</string>
     <string name="select_language">ជ្រើសរើសភាសា</string>

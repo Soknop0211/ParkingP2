@@ -2,7 +2,9 @@ package com.daikou.p2parking.utility
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.activity.result.ActivityResult
+import com.daikou.p2parking.WebPayActivity
 import com.daikou.p2parking.base.BaseActivity
 import com.daikou.p2parking.base.BetterActivityResult
 import com.daikou.p2parking.helper.AuthHelper.clearSession
@@ -54,5 +56,33 @@ object RedirectClass : BaseActivity() {
         val intent = Intent(activity, DoPaymentActivity::class.java)
         intent.putExtra(TicketData, jsonData)
         gotoActivityForResult(activity, intent, activityResult)
+    }
+
+    fun gotoWebPay(activity: Activity , url: String , result : BetterActivityResult.OnActivityResult<ActivityResult>){
+        val intent = Intent(activity, WebPayActivity::class.java)
+        intent.putExtra("linkUrl", url)
+        gotoActivityForResult(activity, intent, result)
+    }
+
+    fun openDeepLink(activity: Activity, uri: Uri) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = uri
+        gotoActivity(activity, intent)
+    }
+
+    fun gotoPlayStore(activity: Activity, applicationId: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        try {
+            intent.data = Uri.parse(String.format("%s%s", "market://details?id=", applicationId))
+        } catch (e: Exception) {
+            intent.data = Uri.parse(
+                String.format(
+                    "%s%s",
+                    "https://play.google.com/store/apps/details?id=",
+                    applicationId
+                )
+            )
+        }
+        gotoActivity(activity, intent)
     }
 }

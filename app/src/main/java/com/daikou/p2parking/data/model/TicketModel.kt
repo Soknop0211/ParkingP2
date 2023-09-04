@@ -10,4 +10,5 @@ data class TicketModel(
     @SerializedName("duration") var duration: String? = null,
     @SerializedName("total_price") var totalPrice: Double? = null,
     @SerializedName("image") var image: String? = null,
+    @SerializedName("payment_link") var paymentLink: String? = null,
     ) : java.io.Serializable

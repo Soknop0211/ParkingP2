@@ -1,9 +1,11 @@
 package com.daikou.p2parking.ui.checkout
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.ActivityResult
@@ -36,6 +38,7 @@ class CheckoutDetailActivity : BaseActivity() {
     private var  ticketModel: TicketModel? = null
     private var isPayByCash = true
     private var mTicketNo : String = ""
+    private var mPaymentLink : String = ""
 
     private val lotTypeViewModel: LotTypeViewModel by viewModels {
         factory
@@ -113,6 +116,8 @@ class CheckoutDetailActivity : BaseActivity() {
 
 
             mTicketNo = ticketModel?.ticketNo ?: ""
+            mPaymentLink = ticketModel?.paymentLink ?: ""
+
         }
     }
 
@@ -128,7 +133,7 @@ class CheckoutDetailActivity : BaseActivity() {
             it.isEnabled = false
             it.postDelayed({ it.isEnabled = true }, 500)
 
-            RedirectClass.gotoDoPaymentActivity(this,
+            /*** RedirectClass.gotoDoPaymentActivity(this,
                 Config.GsonConverterHelper.convertGenericClassToJson(ticketModel),
                 object : BetterActivityResult.OnActivityResult<ActivityResult> {
                     override fun onActivityResult(result: ActivityResult) {
@@ -139,7 +144,25 @@ class CheckoutDetailActivity : BaseActivity() {
                             }
                         }
                     }
-                })
+                }) ***/
+
+            if (TextUtils.isEmpty(mPaymentLink)) return@setOnClickListener
+
+            val url = mPaymentLink // Link Url
+            RedirectClass.gotoWebPay(self(), url, object : BetterActivityResult.OnActivityResult<ActivityResult>{
+                override fun onActivityResult(result: ActivityResult) {
+                    if (result.resultCode == Activity.RESULT_OK) {
+                        val data = result.data
+                        if (data != null && data.hasExtra("status")){
+                            val mStatus = data.getStringExtra("status")
+                            if(mStatus.equals("success=1", true)) {
+                                submitCheckOut(PAY_BY_ONLINE)
+                            }
+                        }
+                    }
+                }
+
+            })
         }
 
         binding.actionPayCaseBtn.setOnClickListener {

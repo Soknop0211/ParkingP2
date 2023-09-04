@@ -98,6 +98,8 @@ class MainActivity : BaseActivity() {
                     it.data.image = imgBase64
 
                     SunmiPrintHelper.getInstance().printTicket(it.data)
+
+                    AppLOGG.d("ticketupieeno", it.data.ticketNo ?: "")
                 }
             } else {
                 MessageUtils.showError(this, null, it.message)
