@@ -17,9 +17,11 @@ import com.daikou.p2parking.ui.login.LoginActivity
 
 object RedirectClass : BaseActivity() {
 
-    fun gotoMainActivity(activity: Activity){
+    fun gotoMainActivity(activity: Activity, isClearTop : Boolean? =null){
         val intent = Intent(activity, MainActivity::class.java)
-        // intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        if (isClearTop == true) {
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
         gotoActivity(activity, intent)
         activity.finishAffinity()
     }

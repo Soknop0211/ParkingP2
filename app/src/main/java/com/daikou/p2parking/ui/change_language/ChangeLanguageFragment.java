@@ -82,7 +82,7 @@ public class ChangeLanguageFragment extends DialogFragment {
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             dismiss();
-            RedirectClass.INSTANCE.gotoMainActivity(requireActivity());
+            RedirectClass.INSTANCE.gotoMainActivity(requireActivity(), null);
         }, 1500);
 
     };
