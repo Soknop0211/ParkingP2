@@ -7,6 +7,6 @@
     </base-config>
 
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">parkingdev.daikou.asia</domain>
+        <domain includeSubdomains="true">https://parkingdev.daikou.asia/</domain>
     </domain-config>
 </network-security-config>

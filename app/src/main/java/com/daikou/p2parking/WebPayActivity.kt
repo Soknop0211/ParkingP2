@@ -107,6 +107,27 @@ class WebPayActivity : BaseActivity() {
                 webView?.webChromeClient = object : WebChromeClient() {
                     override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
                         AppLOGG.d("webViewUrl", "Console  : " + consoleMessage.message())
+
+                        if (!TextUtils.isEmpty(consoleMessage.message()) && consoleMessage.message().contains("onPaymentSuccess")) {    // Test
+                            callBackFinishScreen("success=1")
+                        }
+
+                        val msg: String =
+                            (consoleMessage.message() + " -- From line " + consoleMessage.lineNumber()) + " of " + consoleMessage.sourceId()
+                        if (consoleMessage.messageLevel() === ConsoleMessage.MessageLevel.ERROR) {
+                            AppLOGG.d("webViewUrl", "Console  : $msg")
+                        } else {
+                            AppLOGG.d("webViewUrl", "Console  : $msg")
+                        }
+
+                        when (consoleMessage.messageLevel()) {
+                            ConsoleMessage.MessageLevel.DEBUG ->  AppLOGG.d("webViewUrl", msg)
+                            ConsoleMessage.MessageLevel.ERROR ->  AppLOGG.d("webViewUrl", msg)
+                            ConsoleMessage.MessageLevel.LOG ->  AppLOGG.d("webViewUrl", msg)
+                            ConsoleMessage.MessageLevel.TIP ->  AppLOGG.d("webViewUrl", msg)
+                            ConsoleMessage.MessageLevel.WARNING ->  AppLOGG.d("webViewUrl", msg)
+                            else -> {}
+                        }
                         return true
                     }
                 }
@@ -253,6 +274,27 @@ class WebPayActivity : BaseActivity() {
 //            }
 //            return false
 //        }
+
+        override fun onReceivedError(
+            view: WebView,
+            request: WebResourceRequest,
+            error: WebResourceError,
+        ) {
+            super.onReceivedError(view, request, error)
+        }
+
+        override fun onReceivedHttpError(
+            view: WebView,
+            request: WebResourceRequest,
+            errorResponse: WebResourceResponse,
+        ) {
+            super.onReceivedHttpError(view, request, errorResponse)
+            if (errorResponse.statusCode != 200) {
+                AppLOGG.d("webViewUrl", "Console  : ${errorResponse.statusCode}")
+            } else {
+                AppLOGG.d("webViewUrl", "Console  : ${errorResponse.statusCode}")
+            }
+        }
 
         override fun shouldOverrideUrlLoading(
             view: WebView,
