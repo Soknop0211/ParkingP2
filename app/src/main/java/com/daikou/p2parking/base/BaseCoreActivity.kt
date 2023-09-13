@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.daikou.p2parking.helper.HelperUtil
 import com.daikou.p2parking.model.Constants
 import com.daikou.p2parking.model.User
 import com.google.gson.Gson
@@ -40,5 +41,8 @@ open class BaseCoreActivity : DaggerAppCompatActivity() {
             .asBitmap()
             .load(image)
             .into(imageBitmap)
+    }
+    fun hasInternetConnection(): Boolean {
+        return !HelperUtil.hasNotNetworkAvailable(self())
     }
 }

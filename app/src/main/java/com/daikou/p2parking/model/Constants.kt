@@ -3,6 +3,10 @@ package com.daikou.p2parking.model
 import com.daikou.p2parking.BuildConfig
 
 object Constants {
+
+    object LotType{
+        const val LOT_TYPE_KEY = "lot_type_key"
+    }
     object  Auth{
         const val TOKEN_KEY = "token_key"
         const val USER_KEY = "user_key"

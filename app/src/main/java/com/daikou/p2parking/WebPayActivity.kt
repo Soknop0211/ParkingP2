@@ -60,21 +60,22 @@ class WebPayActivity : BaseActivity() {
         backBtn.setOnClickListener {
             if (!isCanBack) return@setOnClickListener
 
-            if (webView?.canGoBack() == true) {
-                webView?.goBack()
-            } else {
-                finish()
-            }
+//            if (webView?.canGoBack() == true) {
+//                webView?.goBack()
+//            } else {
+//                backFromPaymentWebView()
+//            }
+            backFromPaymentWebView()
         }
 
-        hasKessChatInstall =
-                /* isAppInstalled(Config.TypeDeepLink.kessChatDeepLink, packageManager) ==*/ true
-        hasAbaInstall = isAppInstalled(Constants.Config.TypeDeepLink.abaDeepLink, packageManager) == true
-
-        hasAcledaInstall =
-            isAppInstalled(Constants.Config.TypeDeepLink.acledaDeepLink, packageManager) == true
-        hasSpnInstall =
-            isAppInstalled(Constants.Config.TypeDeepLink.sathapanaDeepLink, packageManager) == true
+//        hasKessChatInstall =
+//                /* isAppInstalled(Config.TypeDeepLink.kessChatDeepLink, packageManager) ==*/ true
+//        hasAbaInstall = isAppInstalled(Constants.Config.TypeDeepLink.abaDeepLink, packageManager) == true
+//
+//        hasAcledaInstall =
+//            isAppInstalled(Constants.Config.TypeDeepLink.acledaDeepLink, packageManager) == true
+//        hasSpnInstall =
+//            isAppInstalled(Constants.Config.TypeDeepLink.sathapanaDeepLink, packageManager) == true
 
     }
 
@@ -107,14 +108,13 @@ class WebPayActivity : BaseActivity() {
                 webView?.webChromeClient = object : WebChromeClient() {
                     override fun onConsoleMessage(consoleMessage: ConsoleMessage): Boolean {
                         AppLOGG.d("webViewUrl", "Console  : " + consoleMessage.message())
-
                         if (!TextUtils.isEmpty(consoleMessage.message()) && consoleMessage.message().contains("onPaymentSuccess")) {    // Test
                             callBackFinishScreen("success=1")
                         }
 
                         val msg: String =
                             (consoleMessage.message() + " -- From line " + consoleMessage.lineNumber()) + " of " + consoleMessage.sourceId()
-                        if (consoleMessage.messageLevel() === ConsoleMessage.MessageLevel.ERROR) {
+                        if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
                             AppLOGG.d("webViewUrl", "Console  : $msg")
                         } else {
                             AppLOGG.d("webViewUrl", "Console  : $msg")
@@ -177,103 +177,6 @@ class WebPayActivity : BaseActivity() {
             isCanBack = true
         }
 
-//        override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-//            super.shouldOverrideUrlLoading(view, request)
-//            progressBar?.visibility = View.VISIBLE
-//            isCanBack = true
-//
-//            AppLOGG.d("webViewUrl","url shouldOverrideUrlLoading :  " + request.url.toString() + "          " + request.url.authority)
-//
-//            val authority: String? = if (!TextUtils.isEmpty(request.url.toString()) && !TextUtils.isEmpty(request.url.authority)) {
-//                request.url.authority
-//            } else {
-//                ""
-//            }
-//
-//            val scheme =
-//                if (!TextUtils.isEmpty(request.url.toString()) && !TextUtils.isEmpty(request.url.scheme)) request.url.scheme else ""
-//
-//            val kessChatScheme = "kesspay.io"
-//            val url = request.url.toString()
-//            if (authority == kessChatScheme) {
-//                view.visibility = View.GONE
-//                if (!url.contains(Constants.Config.BASE_URL + "/")) {
-//                    if (url.contains(kessChatScheme) || !url.contains("https://") || url.contains(".apk")) {
-//                        view.visibility = View.GONE
-//                        try {
-//                            isOpenDeepLink = true
-//                            val intent = Intent(Intent.ACTION_VIEW)
-//                            intent.data = request.url
-//                            startActivity(intent)
-//                        } catch (e: Exception) {
-//                            isOpenDeepLink = true
-//                            progressBar!!.visibility = View.GONE
-//                            if (authority == Constants.Config.TypeScheme.kessChatScheme) {
-//                                RedirectClass.gotoPlayStore(self(), Constants.Config.TypeDeepLink.kessChatDeepLink)
-//                                return true
-//                            }
-//                            else if (scheme == Constants.Config.TypeScheme.abaScheme) {
-//                                RedirectClass.gotoPlayStore(self(), Constants.Config.TypeDeepLink.abaDeepLink)
-//                            }
-//                            else if (scheme == Constants.Config.TypeScheme.acledaScheme) {
-//                                RedirectClass.gotoPlayStore(self(), Constants.Config.TypeDeepLink.acledaDeepLink)
-//                            }
-//                            else if (scheme == Constants.Config.TypeScheme.spnScheme) {
-//                                RedirectClass.gotoPlayStore(self(), Constants.Config.TypeDeepLink.sathapanaDeepLink)
-//                            }
-//                            else {
-//                                val mUrl: String = request.url.toString()
-//                                view.visibility = View.VISIBLE
-//                                return !(mUrl.startsWith("http:") || mUrl.startsWith("https://"))
-//                            }
-//                        }
-//                    }
-//                }
-//            } else {
-//                if (!url.contains(Constants.Config.BASE_URL + "/")) {
-//                    if (url.contains(Constants.WebPay.kess_url) || !url.contains("https://") || url.contains(
-//                            ".apk"
-//                        )
-//                    ) {
-//                        view.visibility = View.GONE
-//                        try {
-//                            isOpenDeepLink = true
-////                            Utils.logDebug("webViewUrl", "uri :       " + Uri.parse(url))
-//                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-//                            startActivity(intent)
-//                        } catch (e: Exception) {
-//                            isOpenDeepLink = true
-//                            progressBar!!.visibility = View.GONE
-//                            if (authority == Constants.Config.TypeScheme.kessChatScheme) {
-//                                RedirectClass.gotoPlayStore(self(), Constants.Config.TypeDeepLink.kessChatDeepLink)
-//                                return true
-//                            }
-//                            else if (scheme == Constants.Config.TypeScheme.abaScheme) {
-//                                RedirectClass.gotoPlayStore(self(), Constants.Config.TypeDeepLink.abaDeepLink)
-//                            }
-//                            else if (scheme == Constants.Config.TypeScheme.acledaScheme) {
-//                                RedirectClass.gotoPlayStore(self(), Constants.Config.TypeDeepLink.acledaDeepLink)
-//                            }
-//                            else if (scheme == Constants.Config.TypeScheme.spnScheme) {
-//                                RedirectClass.gotoPlayStore(self(), Constants.Config.TypeDeepLink.sathapanaDeepLink)
-//                            }
-//                            else {
-//                                val mUrl: String = request.url.toString()
-//                                view.visibility = View.VISIBLE
-//                                return !(mUrl.startsWith("http:") || mUrl.startsWith("https://"))
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            if (view.visibility == View.GONE) {
-//                progressBar!!.visibility = View.VISIBLE
-//            } else {
-//                progressBar!!.visibility = View.GONE
-//            }
-//            return false
-//        }
 
         override fun onReceivedError(
             view: WebView,
@@ -355,15 +258,15 @@ class WebPayActivity : BaseActivity() {
 
         override fun onPageFinished(view: WebView, url: String) {
             AppLOGG.d("webViewUrl", "url finish :       $url")
+            AppLOGG.d("status", "onPageFinish :      ")
             super.onPageFinished(view, url)
             isCanBack = true
             progressBar?.visibility = View.GONE
             view.visibility = View.VISIBLE
 
-            // injectJavaScriptFunction()
+            //injectJavaScriptFunction()
 
             if (!TextUtils.isEmpty(url))     callBackResponseFinish(url, view)
-
         }
     }
 

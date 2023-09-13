@@ -8,6 +8,8 @@ import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
@@ -20,7 +22,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.daikou.p2parking.R
 import com.daikou.p2parking.model.Constants
 import com.daikou.p2parking.model.Constants.Auth.customBroadcastKey
-import com.daikou.p2parking.ui.MainActivity
+import com.daikou.p2parking.model.LotTypeModel
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
 import com.google.zxing.WriterException
@@ -28,8 +32,44 @@ import com.journeyapps.barcodescanner.BarcodeEncoder
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 object HelperUtil {
+
+    fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        if (capabilities != null) {
+            when {
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+                    return true
+                }
+
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                    return true
+                }
+
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    fun hasNotNetworkAvailable(context: Context): Boolean {
+        return !isNetworkAvailable(context)
+    }
+
+    fun saveLotType(context: Context, lotTypeList : ArrayList<LotTypeModel>){
+        val json = Gson().toJson(lotTypeList)
+        setStringSharePreference(context, Constants.LotType.LOT_TYPE_KEY, json)
+    }
+    fun getSaveLotType(context: Context): String {
+        return getStringSharePreference(context, Constants.LotType.LOT_TYPE_KEY)
+    }
 
     fun convertBitmap(context: Context, uri: Uri) : Bitmap{
         val bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -54,8 +94,6 @@ object HelperUtil {
         }
         return null
     }
-
-
 
     @SuppressLint("SimpleDateFormat")
     fun formatDate(date : Date) : String {
