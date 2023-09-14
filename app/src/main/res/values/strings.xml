@@ -13,7 +13,7 @@
     <string name="check_out_detail">Checkout Detail</string>
     <string name="select_payment_method">Select Payment Method</string>
     <string name="pay_by_case">Pay By Cash</string>
-    <string name="online_pay">Online Pay</string>
+    <string name="online_pay">Pay Online</string>
     <string name="enter_password">Enter Password</string>
     <string name="log_in">Login</string>
     <string name="phone_number">Phone Number</string>
@@ -45,5 +45,6 @@
     <string name="search_ticket_no">Search</string>
     <string name="enter_ticket_no">Enter ticket no</string>
     <string name="please_enter_ticket_no_that_have_in_ticket_to_preview_check_out">Please enter ticket no that have in ticket to preview to check out detail.</string>
+    <string name="please_confirm_pay_by_case">Please confirm for pay by case!</string>
 
 </resources>

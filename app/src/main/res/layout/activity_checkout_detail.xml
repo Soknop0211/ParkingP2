@@ -210,47 +210,87 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
                         <LinearLayout
-                            android:id="@+id/action_pay_case_btn"
+                            android:layout_gravity="bottom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/shape_error"
+                            android:layout_weight="1"
+                            android:background="@drawable/card_view_card"
                             android:backgroundTint="@color/colorPrimary"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:padding="10dp">
+                            android:layout_margin="10dp">
 
-                            <TextView
-                                android:id="@+id/txtCase"
-                                android:layout_width="wrap_content"
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/action_pay_by_case_btn"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
+                                style="@style/ButtonStyle"
                                 android:text="@string/pay_by_case"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/white"
+                                app:strokeColor="@color/colorSecondaryPrimary"/>
 
                         </LinearLayout>
-
                         <LinearLayout
-                            android:id="@+id/action_online_pay_btn"
+                            android:layout_gravity="bottom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="10dp"
-                            android:background="@drawable/shape_error"
-                            android:backgroundTint="@color/light_gray"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:padding="10dp">
+                            android:layout_weight="1"
+                            android:background="@drawable/card_view_card"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:layout_margin="10dp">
 
-                            <TextView
-                                android:id="@+id/txtOnline"
-                                android:layout_width="wrap_content"
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/action_online_pay_btn"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:paddingHorizontal="10dp"
+                                style="@style/ButtonStyle"
                                 android:text="@string/online_pay"
-                                android:textColor="@color/dark_gray" />
+                                android:textColor="@color/white"
+                                app:strokeColor="@color/colorSecondaryPrimary"/>
 
                         </LinearLayout>
+
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/action_pay_case_btn"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:background="@drawable/shape_error"-->
+<!--                            android:backgroundTint="@color/colorPrimary"-->
+<!--                            android:foreground="?android:attr/selectableItemBackground"-->
+<!--                            android:padding="10dp">-->
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/txtCase"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:text="@string/pay_by_case"-->
+<!--                                android:textColor="@color/black" />-->
+
+<!--                        </LinearLayout>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:id="@+id/action_online_pay_btn"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginHorizontal="10dp"-->
+<!--                            android:background="@drawable/shape_error"-->
+<!--                            android:backgroundTint="@color/light_gray"-->
+<!--                            android:foreground="?android:attr/selectableItemBackground"-->
+<!--                            android:padding="10dp">-->
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/txtOnline"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_gravity="center"-->
+<!--                                android:paddingHorizontal="10dp"-->
+<!--                                android:text="@string/online_pay"-->
+<!--                                android:textColor="@color/dark_gray" />-->
+
+<!--                        </LinearLayout>-->
 
 
                     </LinearLayout>
@@ -267,6 +307,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/card_view_card"
             android:backgroundTint="@color/colorPrimary"
+            android:visibility="gone"
             android:layout_margin="10dp">
 
             <com.google.android.material.button.MaterialButton

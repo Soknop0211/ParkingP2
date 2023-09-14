@@ -11,6 +11,7 @@ import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.daikou.p2parking.R
 import com.daikou.p2parking.base.BaseActivity
 import com.daikou.p2parking.base.BetterActivityResult
@@ -122,11 +123,13 @@ class CheckoutDetailActivity : BaseActivity() {
     }
 
     private fun initAction(){
-        binding.actionSubmitBtn.setOnClickListener {
+        binding.actionPayByCaseBtn.setOnClickListener {
             it.isEnabled = false
             it.postDelayed({ it.isEnabled = true }, 500)
-
-            submitCheckOut(PAY_BY_CASH)
+            MessageUtils.showConfirm(self(), getString(R.string.pay_by_case), getString(R.string.please_confirm_pay_by_case)) { sweetDialog ->
+                sweetDialog.dismiss()
+                submitCheckOut(PAY_BY_CASH)
+            }
         }
 
         binding.actionOnlinePayBtn.setOnClickListener { it ->
@@ -165,13 +168,13 @@ class CheckoutDetailActivity : BaseActivity() {
             })
         }
 
-        binding.actionPayCaseBtn.setOnClickListener {
-            isPayByCash = true
-            binding.actionOnlinePayBtn.setBackgroundTint(R.color.light_gray)
-            binding.actionPayCaseBtn.setBackgroundTint(R.color.colorPrimary)
-            binding.txtOnline.setTextColor(ContextCompat.getColor(this, R.color.dark_gray))
-            binding.txtCase.setTextColor(ContextCompat.getColor(this, R.color.black))
-        }
+//        binding.actionPayCaseBtn.setOnClickListener {
+//            isPayByCash = true
+//            binding.actionOnlinePayBtn.setBackgroundTint(R.color.light_gray)
+//            binding.actionPayCaseBtn.setBackgroundTint(R.color.colorPrimary)
+//            binding.txtOnline.setTextColor(ContextCompat.getColor(this, R.color.dark_gray))
+//            binding.txtCase.setTextColor(ContextCompat.getColor(this, R.color.black))
+//        }
     }
 
     private fun submitCheckOut(mStatus : String) {

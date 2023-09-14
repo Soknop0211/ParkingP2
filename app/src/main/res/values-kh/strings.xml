@@ -44,4 +44,5 @@
     <string name="search_ticket_no">ស្វែងរក</string>
     <string name="enter_ticket_no">បញ្ចូលលេខសំបុត្រ</string>
     <string name="please_enter_ticket_no_that_have_in_ticket_to_preview_check_out">សូមបញ្ចូលលេខសំបុត្រដែលមាននៅក្នុងសំបុត្រ ដើម្បីពិនិត្យមើលព័ត៌មានលម្អិតអំពីការចេញ</string>
+    <string name="please_confirm_pay_by_case">សូមបញ្ជាក់សម្រាប់ការបង់ជាសាច់ប្រាក់!</string>
 </resources>
