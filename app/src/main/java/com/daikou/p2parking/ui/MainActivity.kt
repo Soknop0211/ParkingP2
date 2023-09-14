@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.result.ActivityResult
@@ -85,6 +86,8 @@ class MainActivity : BaseActivity() {
                 if (it.data != null && it.data.isNotEmpty()) {
                     backUpLotTypeData = Config.GsonConverterHelper.convertGenericClassToJson(it.data)
                     gotoLotTypeScreen(backUpLotTypeData)
+
+                    Log.d("ddddddddd", "onCreate: " + Config.BASE_URL)
                 }
             } else {
                 MessageUtils.showError(this, null, it.message)

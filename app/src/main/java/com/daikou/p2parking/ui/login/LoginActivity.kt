@@ -2,6 +2,7 @@ package com.daikou.p2parking.ui.login
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import androidx.activity.viewModels
@@ -72,6 +73,8 @@ class LoginActivity : SimpleBaseActivity() {
                 }
             } else {
                 MessageUtils.showError(this, null, respondState.message)
+
+                Log.d("ddddddddd", "onCreate: " + Config.BASE_URL)
             }
         }
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.PersistableBundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,7 @@ import com.daikou.p2parking.model.Constants
 import com.daikou.p2parking.model.User
 import com.google.gson.Gson
 import dagger.android.support.DaggerAppCompatActivity
+import timber.log.Timber
 import javax.inject.Inject
 
 open class BaseCoreActivity : DaggerAppCompatActivity() {

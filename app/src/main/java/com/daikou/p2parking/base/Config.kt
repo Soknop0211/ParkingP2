@@ -1,9 +1,10 @@
 package com.daikou.p2parking.base
 
+import com.daikou.p2parking.BuildConfig
 import com.google.gson.Gson
 
 object Config {
-    const val BASE_URL = "https://parkingdev.daikou.asia/"
+    const val BASE_URL = BuildConfig.BASE_URL
     const val APP_TYPE = "parking_customer"
     const val LANGUAGE = "en"
     const val LANG_KH = "kh"
