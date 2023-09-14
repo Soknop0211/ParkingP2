@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">P2 Parking</string>
+    <string name="app_name">EZ Pass</string>
     <string name="check_in">Check In</string>
     <string name="check_out">Check Out</string>
     <string name="type">Type:</string>
