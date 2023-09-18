@@ -7,6 +7,7 @@ import androidx.activity.result.ActivityResult
 import com.daikou.p2parking.WebPayActivity
 import com.daikou.p2parking.base.BaseActivity
 import com.daikou.p2parking.base.BetterActivityResult
+import com.daikou.p2parking.emunUtil.HomeScreenEnum
 import com.daikou.p2parking.helper.AuthHelper.clearSession
 import com.daikou.p2parking.ui.LotTypeActivity
 import com.daikou.p2parking.ui.MainActivity

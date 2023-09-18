@@ -40,6 +40,8 @@
     <string name="khmer">Khmer</string>
     <string name="english">English</string>
     <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="receipt">Print Receipt</string>
     <string name="home">Home</string>
     <string name="eazy_partner_solution_co_ltd">EAZY Partner Solution Co., Ltd</string>
     <string name="search_ticket_no">Search</string>

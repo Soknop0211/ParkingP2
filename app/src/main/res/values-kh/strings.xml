@@ -40,6 +40,8 @@
     <string name="khmer">ខ្មែរ</string>
     <string name="english">អង់គ្លេស</string>
     <string name="cancel">បោះបង់</string>
+    <string name="ok">យល់ព្រម</string>
+    <string name="receipt">ព្រីនសំបុត្រ</string>
     <string name="home">ទំព័រដំបូង</string>
     <string name="search_ticket_no">ស្វែងរក</string>
     <string name="enter_ticket_no">បញ្ចូលលេខសំបុត្រ</string>

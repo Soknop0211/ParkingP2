@@ -18,12 +18,10 @@ import com.daikou.p2parking.base.BetterActivityResult
 import com.daikou.p2parking.base.Config
 import com.daikou.p2parking.data.model.TicketModel
 import com.daikou.p2parking.databinding.ActivityCheckoutDetailBinding
-import com.daikou.p2parking.helper.AuthHelper
-import com.daikou.p2parking.helper.HelperUtil
+import com.daikou.p2parking.emunUtil.TicketType
+import com.daikou.p2parking.helper.*
 import com.daikou.p2parking.helper.HelperUtil.formatDatFromDatetime
 import com.daikou.p2parking.helper.HelperUtil.formatDate
-import com.daikou.p2parking.helper.MessageUtils
-import com.daikou.p2parking.helper.PermissionRequest
 import com.daikou.p2parking.helper.extension.setBackgroundTint
 import com.daikou.p2parking.model.User
 import com.daikou.p2parking.ui.LotTypeActivity
@@ -71,10 +69,14 @@ class CheckoutDetailActivity : BaseActivity() {
 
         lotTypeViewModel.submitCheckOutMutableLiveData.observe(this) { respondState ->
             if (respondState.success) {
-                MessageUtils.showSuccess(this, null, resources.getString(R.string.payment_success) ) {
+                MessageUtils.showSuccess(this, null, resources.getString(R.string.payment_success), { onCancelListener ->
+                    onCancelListener.dismiss()
                     finish()
-                    it.dismiss()
-                }
+                }, { onSubmitPrintReceiptListener ->
+                    SunmiPrintHelper.getInstance().printTicket(ticketModel, TicketType.CheckOut)
+                    onSubmitPrintReceiptListener.dismiss()
+                    finish()
+                })
             } else {
                 MessageUtils.showError(this, null, respondState.message)
             }

@@ -168,7 +168,8 @@ object MessageUtils {
         context: Context?,
         title: String?,
         text: String?,
-        onSweetClickListener: OnSweetClickListener?,
+        onOkClickListener: OnSweetClickListener?,
+        onSubmitPrintClickListener: OnSweetClickListener?,
     ) {
         var text = text
         try {
@@ -177,7 +178,11 @@ object MessageUtils {
                 EazySweetAlert(context, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText(title)
                     .setContentText(text)
-                    .setConfirmClickListener(onSweetClickListener)
+                    .setConfirmClickListener(onSubmitPrintClickListener)
+                    .setCancelClickListener(onOkClickListener)
+                    .setConfirmText(context!!.getString(R.string.receipt))
+                    .setCancelText(context!!.getString(R.string.ok))
+                    .showCancelButton(true)
             alertDialog.setCanceledOnTouchOutside(false)
             alertDialog.show()
         } catch (ex: Exception) {
@@ -196,28 +201,28 @@ object MessageUtils {
         alertDialog.show()
     }
 
-    fun showSuccess(
-        context: Context?,
-        title: String?,
-        text: String?,
-        onSweetClickListener: OnSweetClickListener?,
-        onDismissListener: DialogInterface.OnDismissListener?,
-    ) {
-        var text = text
-        try {
-            text = text?.replace("\r\n".toRegex(), "<br />") ?: ""
-            val alertDialog: SweetAlertDialog =
-                EazySweetAlert(context, SweetAlertDialog.SUCCESS_TYPE)
-                    .setTitleText(title)
-                    .setContentText(text)
-                    .setConfirmClickListener(onSweetClickListener)
-            alertDialog.setOnDismissListener(onDismissListener)
-            alertDialog.setCanceledOnTouchOutside(false)
-            alertDialog.show()
-        } catch (ex: java.lang.RuntimeException) {
-            ex.printStackTrace()
-        }
-    }
+//    fun showSuccess(
+//        context: Context?,
+//        title: String?,
+//        text: String?,
+//        onSweetClickListener: OnSweetClickListener?,
+//        onDismissListener: DialogInterface.OnDismissListener?,
+//    ) {
+//        var text = text
+//        try {
+//            text = text?.replace("\r\n".toRegex(), "<br />") ?: ""
+//            val alertDialog: SweetAlertDialog =
+//                EazySweetAlert(context, SweetAlertDialog.SUCCESS_TYPE)
+//                    .setTitleText(title)
+//                    .setContentText(text)
+//                    .setConfirmClickListener(onSweetClickListener)
+//            alertDialog.setOnDismissListener(onDismissListener)
+//            alertDialog.setCanceledOnTouchOutside(false)
+//            alertDialog.show()
+//        } catch (ex: java.lang.RuntimeException) {
+//            ex.printStackTrace()
+//        }
+//    }
 
     fun showSuccess(
         context: Context?,

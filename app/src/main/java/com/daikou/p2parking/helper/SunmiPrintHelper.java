@@ -147,6 +147,8 @@ public class SunmiPrintHelper {
 
             sunmiPrinterService.printText("NO: ", null);
             sunmiPrinterService.printText(ticketModel.getTicketNo()== null ? "" : ticketModel.getTicketNo() + "\n", null);
+            sunmiPrinterService.printText("LOCATION: ", null);
+            sunmiPrinterService.printText("Phnom Penh International Airport\n", null);
             if(ticketType == TicketType.CheckIn) {
                 sunmiPrinterService.printText("TIME IN: ", null);
 
