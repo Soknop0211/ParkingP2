@@ -16,6 +16,7 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.MediaStore
 import android.util.Base64
+import android.util.Log
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -188,5 +189,23 @@ object HelperUtil {
             }, 500)
         }
     }
+
+    object ParkingInfo{
+        const val isAlreadyRequest = "isAlreadyRequest"
+        fun saveParkingDevices(context: Context, devices : HashMap<String, String>){
+            val gson = Gson()
+            val listJson = gson.toJson(devices)
+            setStringSharePreference(context,Constants.PARKING_DEVICE_LIST, listJson)
+        }
+        fun getParkingDevice(context: Context) : HashMap<String, String>{
+            val listJson = getStringSharePreference(context, Constants.PARKING_DEVICE_LIST)
+            val gson = Gson()
+            val type = object : TypeToken<HashMap<String , Any>>(){}.type
+            if (listJson != ""){
+                return gson.fromJson(listJson, type)
+            }else{
+                return  HashMap()
+            }
+        }}
 
 }

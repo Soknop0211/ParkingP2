@@ -153,4 +153,38 @@ class LotTypeViewModel @Inject constructor(
         })
     }
 
+    /*** Log Out **/
+    private val _parkingDeviceLiveData = MutableLiveData<ApiResWraper<JsonElement>>()
+
+    val parkingDeviceLiveData: MutableLiveData<ApiResWraper<JsonElement>> get() = _parkingDeviceLiveData
+
+    fun getParkingDeviceID() {
+        val requestFlow: Flow<ApiResWraper<JsonElement>> = repository.fetchParkingDevice()
+        submit(requestFlow, object : IApiResWrapper<ApiResWraper<JsonElement>> {
+            override fun onLoading(hasLoading: Boolean) {
+                loadingLoginLiveData.value = hasLoading
+            }
+
+            override fun onData(respondData: ApiResWraper<JsonElement>) {
+                if (respondData.success) {
+                    _parkingDeviceLiveData.value = respondData
+                }
+            }
+
+            override fun onError(
+                message: String,
+                code: Int,
+                errorHashMap: JsonObject,
+            ) {
+                dataLoginLiveData.value = ApiResWraper(
+                    code,
+                    message,
+                    false,
+                    errorHashMap,
+                )
+            }
+
+        })
+    }
+
 }

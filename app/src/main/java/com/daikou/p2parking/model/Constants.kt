@@ -3,6 +3,9 @@ package com.daikou.p2parking.model
 import com.daikou.p2parking.BuildConfig
 
 object Constants {
+   const val PARKING_DEVICE_LIST = "parking_device_list"
+    const val ENTRANCE = "entrance"
+    const val EXIT = "exit"
 
     object LotType{
         const val LOT_TYPE_KEY = "lot_type_key"

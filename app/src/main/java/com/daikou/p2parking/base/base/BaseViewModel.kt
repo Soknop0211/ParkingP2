@@ -1,6 +1,7 @@
 package com.daikou.p2parking.base.base
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -52,7 +53,7 @@ open class BaseViewModel
         iApiResWrapper.onLoading(true)
         viewModelScope.launch {
             flowRequest.catch { error ->
-                AppLOGG.d("ERROROROOROROR", Gson().toJson(error))
+                Log.d("ERROROROOROROR", Gson().toJson(error))
                 iApiResWrapper.onLoading(false)
                 CatchServerErrorSingleTonJava.catchError(
                     context,

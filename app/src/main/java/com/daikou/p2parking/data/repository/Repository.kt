@@ -43,4 +43,9 @@ class Repository
         val respond = apiService.submitCheckOut(bodyMap)
         emit(respond)
     }
+
+    fun fetchParkingDevice(): Flow<ApiResWraper<JsonElement>> = flow {
+        val respond = apiService.fetchParkingDevices()
+        emit(respond)
+    }
 }

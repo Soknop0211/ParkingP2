@@ -24,4 +24,7 @@ interface ParkingApi {
 
     @POST("api/p2/check_out")
     suspend fun submitCheckOut(@Body map: HashMap<String, Any>): ApiResWraper<JsonElement>
+
+    @GET("api/user/fetch_all_parking_devices")
+    suspend fun fetchParkingDevices() : ApiResWraper<JsonElement>
 }
