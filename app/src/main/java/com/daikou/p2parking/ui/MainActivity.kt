@@ -1,6 +1,5 @@
 package com.daikou.p2parking.ui
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
@@ -27,7 +26,7 @@ import com.daikou.p2parking.emunUtil.HomeScreenEnum
 import com.daikou.p2parking.helper.*
 import com.daikou.p2parking.model.Constants
 import com.daikou.p2parking.model.LotTypeModel
-import com.daikou.p2parking.sdk.ParkingController
+import com.daikou.p2parking.sdk.ParkingController2
 import com.daikou.p2parking.ui.change_language.ChangeLanguageFragment
 import com.daikou.p2parking.ui.checkout.CheckoutDetailActivity
 import com.daikou.p2parking.ui.scan_check_out.CaptureScanActivity
@@ -36,7 +35,6 @@ import com.daikou.p2parking.view_model.LotTypeViewModel
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.text.TextRecognizer
-import com.google.gson.JsonObject
 import com.google.zxing.client.android.Intents
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
@@ -50,7 +48,7 @@ class MainActivity : BaseActivity() {
     private var backUpLotTypeData = ""
     private var mLotTypeModel: LotTypeModel?= null
     private var isSuccessSever = false
-    private lateinit var parkingController: ParkingController
+    private lateinit var parkingController: ParkingController2
     private val lotTypeViewModel: LotTypeViewModel by viewModels {
         factory
     }
@@ -69,7 +67,7 @@ class MainActivity : BaseActivity() {
                 isAppearanceLightStatusBars = true
             } ***/
 
-        parkingController = ParkingController()
+        parkingController = ParkingController2()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -93,6 +91,7 @@ class MainActivity : BaseActivity() {
         lotTypeViewModel.getParkingDeviceID()
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun observableField() {
 
         lotTypeViewModel.loadingLoginLiveData.observe(self()) {
@@ -138,7 +137,15 @@ class MainActivity : BaseActivity() {
         // Do Check In
         lotTypeViewModel.submitCheckInMutableLiveData.observe(self()) {
             if (it != null && it.success) {
-                connectToParking()
+                Log.d("dddddddddddddd", "observableField: successServer")
+                //connectToParking()
+//                if (mServiceUuid.isEmpty()) {
+//                    isSuccessSever = true
+//                } else {
+//                    isSuccessSever = false
+//                    parkingController.openLastParking(mServiceUuid, mCharUuid)
+//                }
+
                 if (it.data != null) {
                     it.data.image = imgBase64
 
@@ -233,30 +240,33 @@ class MainActivity : BaseActivity() {
         setupHomeItem()
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun connectToParking(){
+        ParkingStatus = Constants.ENTRANCE
         Log.d("dddddddddddddddd",  ParkingStatus+ "  "+ParkingId.PARKING_ID)
 
-        parkingController.connectToParking(this, object : ParkingController.ParkingCallBack{
-            @SuppressLint("MissingPermission")
+        parkingController.connectToParking(self(), object : ParkingController2.ParkingCallBack{
+            override fun onParkingOpen(
+                message: String?,
+                name: String?,
+                serviceUuid: String?,
+                charUuid: String?,
+                bluetoothDevice: BluetoothDevice
+            ) {
+                mServiceUuid = serviceUuid!!
+                mCharUuid = charUuid!!
+                //lotTypeViewModel.submitChecking(bodyRequest)
+                parkingController.openLastParking(serviceUuid, charUuid)
+            }
+
             override fun onConnect(bluetoothDevice: BluetoothDevice) {
-                parkingController.openParking(bluetoothDevice)
+                parkingController.cancelScanning()
             }
 
             override fun onError(message: String?) {
-                //updateUi(true, message)
+                MessageUtils.showError(self(), "", message)
             }
 
-            @RequiresApi(Build.VERSION_CODES.S)
-            override fun onParkingOpen(message: String?, name: String?, serviceUuid: String?, charUuid: String?) {
-                mServiceUuid = serviceUuid!!
-                mCharUuid = charUuid!!
-                parkingController.openLastParking(serviceUuid, charUuid)
-                parkingController.cancelScanning()
-                parkingController.disconnectFromDevice()
-//                if (!isSuccessSever) {
-//                    parkingController.openLastParking(serviceUuid, charUuid)
-//                }
-            }
         })
     }
 
@@ -348,6 +358,7 @@ class MainActivity : BaseActivity() {
         builder.start()
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK){
@@ -372,7 +383,7 @@ class MainActivity : BaseActivity() {
                             pathImage
                         )
                     }
-                    ParkingStatus = Constants.ENTRANCE
+                   // ParkingStatus = Constants.ENTRANCE
                     //connectToParking(requestBody)
                     lotTypeViewModel.submitChecking(requestBody)
                 }

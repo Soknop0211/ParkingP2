@@ -1,21 +1,15 @@
 package com.daikou.p2parking.ui.checkout
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothDevice
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import cn.pedant.SweetAlert.SweetAlertDialog
 import com.daikou.p2parking.R
 import com.daikou.p2parking.base.BaseActivity
 import com.daikou.p2parking.base.BetterActivityResult
@@ -25,18 +19,12 @@ import com.daikou.p2parking.databinding.ActivityCheckoutDetailBinding
 import com.daikou.p2parking.emunUtil.TicketType
 import com.daikou.p2parking.helper.*
 import com.daikou.p2parking.helper.HelperUtil.formatDatFromDatetime
-import com.daikou.p2parking.helper.HelperUtil.formatDate
-import com.daikou.p2parking.helper.extension.setBackgroundTint
 import com.daikou.p2parking.model.Constants
-import com.daikou.p2parking.model.User
-import com.daikou.p2parking.sdk.ParkingController
-import com.daikou.p2parking.ui.LotTypeActivity
+import com.daikou.p2parking.sdk.ParkingController2
 import com.daikou.p2parking.ui.MainActivity
 import com.daikou.p2parking.utility.RedirectClass
 import com.daikou.p2parking.view_model.LotTypeViewModel
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import java.util.*
+import kotlin.collections.HashMap
 
 class CheckoutDetailActivity : BaseActivity() {
 
@@ -47,7 +35,7 @@ class CheckoutDetailActivity : BaseActivity() {
     private var mPaymentLink : String = ""
 
     private var isSuccessSever = false
-    private lateinit var parkingController: ParkingController
+    private lateinit var parkingController: ParkingController2
     private lateinit var mServiceUuid : String
     private lateinit var mCharUuid : String
 
@@ -62,11 +50,12 @@ class CheckoutDetailActivity : BaseActivity() {
         const val BY_PREVIEW = "preview"
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCheckoutDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        parkingController = ParkingController()
+        parkingController = ParkingController2()
 
         initView()
 
@@ -75,6 +64,7 @@ class CheckoutDetailActivity : BaseActivity() {
         observableField()
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun observableField() {
         lotTypeViewModel.loadingLoginLiveData.observe(self()) {
             binding.loadingView.root.visibility = if (it) View.VISIBLE else View.GONE
@@ -88,8 +78,9 @@ class CheckoutDetailActivity : BaseActivity() {
 //                    isSuccessSever = false
 //                    parkingController.openLastParking(mServiceUuid, mCharUuid)
 //                }
-                MainActivity.ParkingStatus = Constants.EXIT
-                connectToParking()
+                //MainActivity.ParkingStatus = Constants.EXIT
+                //connectToParking()
+
                 MessageUtils.showSuccess(this, null, resources.getString(R.string.payment_success), { onCancelListener ->
                     onCancelListener.dismiss()
                     finish()
@@ -146,6 +137,7 @@ class CheckoutDetailActivity : BaseActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun initAction(){
         binding.actionPayByCaseBtn.setOnClickListener {
             it.isEnabled = false
@@ -201,35 +193,44 @@ class CheckoutDetailActivity : BaseActivity() {
 //        }
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun submitCheckOut(mStatus : String) {
         val requestBody = HashMap<String, Any>()
         requestBody["status"] = mStatus
         requestBody["ticket_no"] = mTicketNo
+        //connectToParking(requestBody)
         lotTypeViewModel.submitCheckOut(requestBody)
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun connectToParking(){
-        parkingController.connectToParking(this, object : ParkingController.ParkingCallBack{
-            @SuppressLint("MissingPermission")
+        MainActivity.ParkingStatus = Constants.EXIT
+        parkingController.connectToParking(self(), object : ParkingController2.ParkingCallBack{
+            @RequiresApi(Build.VERSION_CODES.S)
+            override fun onParkingOpen(
+                message: String?,
+                name: String?,
+                serviceUuid: String?,
+                charUuid: String?,
+                bluetoothDevice: BluetoothDevice
+            ) {
+                mCharUuid = charUuid!!
+                mServiceUuid = serviceUuid!!
+                //lotTypeViewModel.submitCheckOut(requestBody)
+                parkingController.openLastParking(serviceUuid, charUuid)
+//                if (isSuccessSever){
+//                    parkingController.openLastParking(mServiceUuid, charUuid)
+//                }
+            }
+
             override fun onConnect(bluetoothDevice: BluetoothDevice) {
-                parkingController.openParking(bluetoothDevice)
+                parkingController.cancelScanning()
             }
 
             override fun onError(message: String?) {
-                //updateUi(true, message)
+                MessageUtils.showError(self(), "", message)
             }
 
-            //@RequiresApi(Build.VERSION_CODES.S)
-            override fun onParkingOpen(message: String?, name: String?, serviceUuid: String?, charUuid: String?) {
-                mServiceUuid = serviceUuid!!
-                mCharUuid = charUuid!!
-                parkingController.openLastParking(serviceUuid, charUuid)
-                parkingController.cancelScanning()
-                parkingController.disconnectFromDevice()
-                if (isSuccessSever) {
-                    parkingController.openLastParking(serviceUuid, charUuid)
-                }
-            }
         })
     }
 
@@ -240,9 +241,10 @@ class CheckoutDetailActivity : BaseActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onDestroy() {
         super.onDestroy()
-        parkingController.cancelScanning()
-        parkingController.disconnectFromDevice()
+//        parkingController.cancelScanning()
+//        parkingController.disconnectFromDevice()
     }
 }

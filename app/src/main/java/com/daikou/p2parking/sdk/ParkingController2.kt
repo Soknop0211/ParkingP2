@@ -1,6 +1,7 @@
 package com.daikou.p2parking.sdk
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -16,21 +17,17 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.os.Handler
 import android.os.ParcelUuid
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import com.daikou.p2parking.helper.HelperUtil
 import com.daikou.p2parking.helper.ParkingId
 import com.daikou.p2parking.sdk.Util.hexStringToByteArray
 import com.daikou.p2parking.ui.MainActivity
-import java.util.Collections
 import java.util.UUID
 
 
-class ParkingController {
+class ParkingController2 {
 
     private var bluetoothManager: BluetoothManager? = null
     private var bluetoothAdapter: BluetoothAdapter? = null
@@ -44,6 +41,8 @@ class ParkingController {
     private var listDevice = ArrayList<Int>()
     private var isSeeResultScan = false
 
+    private var bluetoothDeviceSave : BluetoothDevice ?= null
+
     var isConnect = false
     private var isCancel = false
 
@@ -54,7 +53,8 @@ class ParkingController {
     }
 
     //@RequiresApi(Build.VERSION_CODES.P)
-    fun connectToParking(activity: Activity,listener: ParkingCallBack) {
+    @RequiresApi(Build.VERSION_CODES.S)
+    fun connectToParking(activity: Activity, listener: ParkingCallBack) {
         this.activity = activity
         this.callBack = listener
 
@@ -64,7 +64,8 @@ class ParkingController {
     }
 
     //@RequiresApi(Build.VERSION_CODES.P)
-    fun connectToParking(activity: Activity, address : String,listener: ParkingCallBack) {
+    @RequiresApi(Build.VERSION_CODES.S)
+    fun connectToParking(activity: Activity, address : String, listener: ParkingCallBack) {
         this.activity = activity
         this.callBack = listener
         this.address = address
@@ -139,6 +140,7 @@ class ParkingController {
     }
 
     private val leScanCallback = object : ScanCallback() {
+        @RequiresApi(Build.VERSION_CODES.S)
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             isSeeResultScan = true
             if (ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
@@ -156,24 +158,27 @@ class ParkingController {
                     if(!isConnect){
                         isConnect = true
                         connectName = device.name
-                        connectToDeviceSelected(result.device)
+                        callBack?.onConnect(result.device)
+                        openParking(result.device)
                     }
                 }
             } else {
                 val deviceName = ParkingId.PARKING_ID[device.name]
-
                 if (MainActivity.ParkingStatus == deviceName) {
+                    listDevice.clear()
                     listDevice.add(result.rssi)
                     if (listDevice.size == 1) {
                         connectName = device.name
                         if (listDevice.sum() >= -100) {
                             callBack?.onConnect(result.device)
+                            openParking(result.device)
                         } else {
                             callBack?.onError("Parking is too far, please come closer.")
                             stopScanning()
                         }
                     }
                 }
+
             }
         }
 
@@ -201,26 +206,25 @@ class ParkingController {
         }
     }
 
-    private fun connectToDeviceSelected(bluetoothDevice: BluetoothDevice) {
-        callBack?.onConnect(bluetoothDevice)
-    }
-
     fun openParking (bluetoothDevice: BluetoothDevice) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S) {
             if (ActivityCompat.checkSelfPermission(activity!!, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
                 return
             }
         }
+        bluetoothDeviceSave = bluetoothDevice
         bluetoothGatt = bluetoothDevice.connectGatt(activity!!, true, btleGattCallback,BluetoothDevice.TRANSPORT_LE)
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     fun openLastParking (serviceUuid : String? , charUuid : String?) {
         openParking(serviceUuid!!,charUuid!!)
     }
 
     private val btleGattCallback = object : BluetoothGattCallback() {
-        //@RequiresApi(Build.VERSION_CODES.P)
+        @SuppressLint("MissingPermission")
         override fun onServicesDiscovered(gatt: BluetoothGatt?, status: Int) {
+            bluetoothLeScanner?.stopScan(leScanCallback)
             val gattServices = gatt?.services ?: return
             // Loops through available GATT Services.
             for (gattService in gattServices) {
@@ -232,15 +236,15 @@ class ParkingController {
                 for (gattCharacteristic in gattCharacteristics) {
                     charUuid = gattCharacteristic.uuid.toString()
                 }
-
                 activity!!.runOnUiThread {
-                    callBack!!.onParkingOpen("Parking is open" , connectName , serviceUuid , charUuid)
+                    Log.d("dddddd", "onServicesDiscovered: " + connectName)
+                    callBack!!.onParkingOpen("Parking is open" , connectName , serviceUuid , charUuid,bluetoothDeviceSave!! )
                 }
                 break
             }
         }
 
-        //@RequiresApi(Build.VERSION_CODES.S)
+        @RequiresApi(Build.VERSION_CODES.S)
         override fun onConnectionStateChange(gatt: BluetoothGatt, status: Int, newState: Int) {
             when (newState) {
                 BluetoothGatt.STATE_CONNECTED -> {
@@ -263,7 +267,7 @@ class ParkingController {
 
     }
 
-    //@RequiresApi(Build.VERSION_CODES.S)
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun openParking(serviceUuid : String, characteristicUuid : String) {
 
         if (bluetoothGatt == null) {
@@ -295,7 +299,7 @@ class ParkingController {
     }
 
     interface ParkingCallBack {
-        fun onParkingOpen(message: String?, name : String?,serviceUuid : String? , charUuid : String?)
+        fun onParkingOpen(message: String?, name : String?,serviceUuid : String? , charUuid : String?,bluetoothDevice: BluetoothDevice)
         fun onConnect (bluetoothDevice: BluetoothDevice)
         fun onError(message: String?)
     }
@@ -318,7 +322,7 @@ class ParkingController {
         }
     }
 
-    //@RequiresApi(Build.VERSION_CODES.S)
+    @RequiresApi(Build.VERSION_CODES.S)
     private fun stopScanning() {
         isCancel = true
         val fineLocationPermission = Manifest.permission.ACCESS_FINE_LOCATION
@@ -338,7 +342,7 @@ class ParkingController {
         }
     }
 
-    //@RequiresApi(Build.VERSION_CODES.S)
+    @RequiresApi(Build.VERSION_CODES.S)
     fun disconnectFromDevice() {
         isCancel = true
         isConnect = false
